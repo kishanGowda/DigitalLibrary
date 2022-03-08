@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.Edit">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+  >
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints" >
+    <ImageView
+        android:id="@+id/back_chapter_detials"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/backarrow" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit information"
+        android:textSize="18dp"
+        android:layout_marginStart="30dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+    </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#636363"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:text="Subject" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/stroke_box"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="@+id/phone_tv"
+            app:layout_constraintTop_toBottomOf="@id/phone_tv">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:background="@color/white"
+                android:id="@+id/name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/close"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="22dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="9dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#636363"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:text="Class" />
+
+
+        <AutoCompleteTextView
+            android:id="@+id/standard_drop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/stroke_box"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:textColorHint="#AEAEAE"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:layout_marginEnd="18dp"
+            android:padding="8dp"
+            android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
+            app:layout_constraintTop_toBottomOf="@+id/gender_tv">
+
+
+        </AutoCompleteTextView>
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#636363"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:text="Chapter" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout_chapter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/stroke_box"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="@+id/phone_tv"
+            app:layout_constraintTop_toBottomOf="@id/phone_tv">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:background="@color/white"
+                android:id="@+id/capter_edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/close_chapter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/close_chapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="9dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#636363"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:text="Topic" />
+
+
+        <AutoCompleteTextView
+            android:id="@+id/topic_drop"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/stroke_box"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:textColorHint="#AEAEAE"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:layout_marginEnd="18dp"
+            android:padding="8dp"
+            android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
+            app:layout_constraintTop_toBottomOf="@+id/gender_tv">
+
+
+        </AutoCompleteTextView>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#636363"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:text="Title" />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+
+            android:background="@drawable/stroke_box"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="18dp"
+            android:id="@+id/title_edit"/>
+
+
+
+
+    </LinearLayout>
+</FrameLayout>

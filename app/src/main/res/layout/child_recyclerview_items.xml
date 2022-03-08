@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aap="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+aap:cardCornerRadius="5dp"
+    android:padding="20dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
+
+    app:ignore="NamespaceTypo">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="AA"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ksnjnsjb"
+        android:id="@+id/course"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:textSize="16dp"/>
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:orientation="horizontal"
+     android:layout_marginTop="16dp"
+     android:layout_marginBottom="16dp"
+     android:layout_height="wrap_content">
+
+
+     <ImageView
+         android:id="@+id/imageView"
+         android:layout_width="14dp"
+         android:layout_height="26dp"
+         android:layout_marginStart="8dp"
+         android:layout_weight="1"
+
+
+         aap:layout_constraintStart_toStartOf="parent"
+         aap:layout_constraintTop_toTopOf="parent"
+         aap:srcCompat="@drawable/subject" />
+
+     <TextView
+         android:id="@+id/notes_count"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:layout_marginStart="8dp"
+         android:text="100"
+         android:layout_marginTop="3dp"
+         android:textColor="@color/black"
+         android:textStyle="bold"
+         aap:layout_constraintBottom_toBottomOf="@+id/imageView"
+         aap:layout_constraintStart_toEndOf="@id/imageView"
+         aap:layout_constraintTop_toTopOf="@+id/imageView" />
+
+     <ImageView
+         android:id="@+id/imageView2"
+         android:layout_width="14dp"
+         android:layout_weight="1"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="10dp"
+
+
+         aap:layout_constraintStart_toEndOf="@+id/notes_count"
+         aap:layout_constraintTop_toTopOf="@+id/imageView"
+         aap:srcCompat="@drawable/new_video2" />
+
+     <TextView
+         android:id="@+id/video_count"
+         android:layout_width="wrap_content"
+         android:layout_weight="1"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="8dp"
+         android:layout_marginTop="3dp"
+
+         android:text="100"
+         android:textColor="@color/black"
+         android:textStyle="bold"
+         aap:layout_constraintBottom_toBottomOf="@+id/imageView2"
+         aap:layout_constraintStart_toEndOf="@id/imageView2"
+         aap:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+     <ImageView
+         android:id="@+id/imageView3"
+         android:layout_width="14dp"
+         android:layout_weight="1"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="10dp"
+
+
+         aap:layout_constraintStart_toEndOf="@+id/video_count"
+         aap:layout_constraintTop_toTopOf="@+id/imageView2"
+         aap:srcCompat="@drawable/new_ques" />
+
+     <TextView
+         android:id="@+id/question_count"
+         android:layout_width="wrap_content"
+         android:layout_weight="1"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="8dp"
+
+         android:layout_marginTop="3dp"
+         android:layout_marginEnd="12dp"
+         android:text="100"
+         android:textColor="@color/black"
+         android:textStyle="bold"
+         aap:layout_constraintBottom_toBottomOf="@+id/imageView3"
+         aap:layout_constraintEnd_toEndOf="parent"
+         aap:layout_constraintStart_toEndOf="@id/imageView3"
+         aap:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+ </LinearLayout>
+
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
