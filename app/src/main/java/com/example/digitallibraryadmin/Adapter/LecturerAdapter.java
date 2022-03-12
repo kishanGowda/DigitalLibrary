@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,7 +21,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.digitallibraryadmin.ApiLibrary.ApiClient;
+import com.example.digitallibraryadmin.ApiLibrary.DeleteTopicRequest;
+import com.example.digitallibraryadmin.ApiLibrary.DeleteTopicResponse;
 import com.example.digitallibraryadmin.ApiLibrary.GetLibraryResponse;
+import com.example.digitallibraryadmin.ApiLibrary.LoginService;
 import com.example.digitallibraryadmin.Fragment.Edit;
 import com.example.digitallibraryadmin.Fragment.PdfReader;
 import com.example.digitallibraryadmin.Fragment.PdfReaderNote;
@@ -31,11 +36,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.MyviewHolder> {
     ArrayList<LecturerModel> lecturerModels;
     Context context;
     String pdfFile;
     BottomSheetDialog bt;
+    Retrofit retrofit;
+    LoginService loginService;
 
     private OnItemClickListener onItemClickListener;
     GetLibraryResponse getLibraryResponse;
@@ -71,13 +83,6 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
         LecturerModel modal = lecturerModels.get(position);
         holder.edit.setImageResource(modal.getEdit());
         holder.content.setText(modal.getContent());
-//        holder.edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                BottomSheetDialogFragment myBottomSheet = EditBottomSheet
-//                myBottomSheet.show(getFragmentManager(),myBottomSheet.getTag());
-//            }
-//        });
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +92,40 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
                 view= LayoutInflater.from(context).inflate(R.layout.edit,null);
                 bt.setContentView(view);
                 bt.setCanceledOnTouchOutside(true);
+
+
                 TextView edit=bt.findViewById(R.id.edit_topic);
+                TextView delete=bt.findViewById(R.id.delete_topic);
+                delete.setOnClickListener(new View.OnClickListener() {
+                                              @Override
+                                              public void onClick(View view) {
+
+                                                      apiInit();
+                                                      DeleteTopicRequest deleteTopicRequest = new DeleteTopicRequest(Integer.valueOf(modal.getId()),1);
+                                                      Call<DeleteTopicResponse> call = loginService.deleteCall(deleteTopicRequest);
+                                                      call.enqueue(new Callback<DeleteTopicResponse>() {
+                                                          @Override
+                                                          public void onResponse(Call<DeleteTopicResponse> call, Response<DeleteTopicResponse> response) {
+                                                              if (!response.isSuccessful()) {
+                                                                  Toast.makeText(context, response.code(), Toast.LENGTH_LONG).show();
+                                                              }
+                                                              DeleteTopicResponse deleteTopicResponse = response.body();
+                                                              Toast.makeText(context,"Topic deleted successfully!", Toast.LENGTH_LONG).show();
+
+                                                          }
+
+                                                          @Override
+                                                          public void onFailure(Call<DeleteTopicResponse> call, Throwable t) {
+                                                              Toast.makeText(edit.getContext(), "Error :(", Toast.LENGTH_LONG).show();
+                                                          }
+                                                      });
+
+
+
+                                              }
+                                          }
+                );
+
                 edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -118,8 +156,6 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
                                         R.anim.fade_in,   // popEnter
                                         R.anim.slide_out  // popExit
                                 );
-
-
                         fragmentTransaction.replace(R.id.your_placeholder, fragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
@@ -132,18 +168,6 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.i("position4", String.valueOf(position));
-//                Fragment fragment = new PdfReaderNote();
-//                FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                Bundle args = new Bundle();
-//                pdfFile=getLibraryResponse.contents.get(position).file;
-//                args.putString("notePosition",String.valueOf(pdfFile));
-//                args.putString("name",String.valueOf(modal.getContent()));
-//                fragment.setArguments(args);
-//                fragmentTransaction.replace(R.id.your_placeholder, fragment);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
                 Log.i("position", String.valueOf(position));
                 Fragment fragment = new PdfReader();
                 FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
@@ -202,5 +226,11 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
         public void setOnItemClickListener(OnItemClickListener listener){
             onItemClickListener=  listener;
         }
+    public void apiInit() {
+
+        retrofit = ApiClient.getRetrofit();
+        loginService = ApiClient.getApiService();
+
+    }
     }
 

@@ -76,32 +76,11 @@ public class LibraryFragment extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
-        subjectName=getArguments().getString("subjectNameTopic");
-        topicName=getArguments().getString("topicName");
-        chapterName=getArguments().getString("chapterName");
-        standardName=getArguments().getString("standardTopicName");
-        sectionName=getArguments().getString("sectionTopic");
-        chapterId = Integer.valueOf(getArguments().getString("chapterId"));
-        topicID = Integer.valueOf(getArguments().getString("topicId"));
-        standardId = Integer.valueOf(getArguments().getString("standardId"));
-        subjectId=Integer.valueOf(getArguments().getString("subjectTopicId"));
-        Log.i("sub",subjectName);
-        Log.i("tn",topicName);
-        Log.i("cn",chapterName);
-        Log.i("se",sectionName);
-        Log.i("stb",standardName);
-        Log.i("subjj",String.valueOf(subjectId));
-        getLibrary();
-        String topicName = String.valueOf(getArguments().getString("topicName"));
-        Log.i("topicname", topicName);
+
+
         TextView tv1 = view.findViewById(R.id.topic_libary_name);
         tv1.setText(topicName);
-        Log.i("chapter", String.valueOf(chapterId));
-        Log.i("topic", String.valueOf(topicID));
-        Log.i("standard", String.valueOf(standardId));
-        Log.i("notes",String.valueOf(notes));
-        Log.i("videos",String.valueOf(video));
-        Log.i("ques",String.valueOf(question));
+
         return view;
     }
 

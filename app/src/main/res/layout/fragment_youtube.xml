@@ -2,11 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.PdfReader">
-
+    tools:context=".Fragment.YoutubeFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,13 +17,13 @@
             tools:ignore="MissingConstraints">
 
             <ImageView
-                android:id="@+id/back_question_pdf"
+                android:id="@+id/back_youtube_pdf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/backarrow" />
 
             <TextView
-                android:id="@+id/question_pdf_tool_bar"
+                android:id="@+id/youtube_title_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -37,8 +35,10 @@
 
 
         <WebView
-            android:id="@+id/web"
+            android:id="@+id/web_youtube"
             android:layout_width="match_parent"
+
             android:layout_height="match_parent" />
     </LinearLayout>
+
 </FrameLayout>

@@ -200,6 +200,9 @@ public class ChapterFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString("standardId", standardid);
         args.putString("subjectId", String.valueOf(subjectId));
+        args.putString("subjectName",subjectName);
+        args.putString("standardName",standardName2);
+        args.putString("section",section2);
         fragment.setArguments(args);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
                 .setCustomAnimations(

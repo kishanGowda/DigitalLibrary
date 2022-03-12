@@ -6,25 +6,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.digitallibraryadmin.Fragment.AddTeacher;
 import com.example.digitallibraryadmin.ModelClass.AddTeacherModel;
-import com.example.digitallibraryadmin.ModelClass.ContentModel;
 import com.example.digitallibraryadmin.R;
 
 import java.util.ArrayList;
 
 public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.ViewHolder> {
     Context context;
+    AddTeacherModel modal;
     private OnItemClickListener onItemClickListener;
     ArrayList<AddTeacherModel> addTeacherSuggets;
-    public AddTeacherAdapter(Context context, ArrayList<AddTeacherModel> addTeacherSuggets) {
+    public AddTeacherAdapter(Context context, ArrayList<AddTeacherModel> addTeacherSuggets, int pos) {
         this.context=context;
         this.addTeacherSuggets=addTeacherSuggets;
     }
@@ -40,7 +38,7 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull AddTeacherAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        AddTeacherModel modal = addTeacherSuggets.get(position);
+            modal = addTeacherSuggets.get(position);
         holder.name.setText(String.valueOf(modal.getTeacherName()));
         holder.cancel.setImageResource(modal.getCancel());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +53,7 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
 
     public interface OnItemClickListener {
         void onItemClickListener(int position);
-        void onDeleteClick(int position);
+        void onDeleteClick(int position, String teacherName);
         void onNameClick(int position);
     }
 
@@ -108,7 +106,7 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
                     if (listener != null) {
                         int position = getAbsoluteAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position);
+                            listener.onDeleteClick(position,modal.getTeacherName());
 
                         }
 

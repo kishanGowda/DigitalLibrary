@@ -48,6 +48,7 @@ ArrayList<ParentModel> parentModels;
     ArrayList<String> names=new ArrayList<>();
     ArrayList<String> chapterNames=new ArrayList<>();
     int standardId,subjectId,chapterId,topicId;
+    ImageView back;
 
 
     public Edit() {
@@ -81,7 +82,6 @@ ArrayList<ParentModel> parentModels;
         subjectId= Integer.valueOf(getArguments().getString("subjectId"));
         chapterId= Integer.valueOf(getArguments().getString("chapterId"));
         topicId=Integer.valueOf(getArguments().getString("topicId"));
-
         Log.i("s1", standardName);
         Log.i("s2", sectionName);
         Log.i("s2", subjectName);
@@ -92,10 +92,6 @@ ArrayList<ParentModel> parentModels;
         Log.i("s22", String.valueOf(subjectId));
         Log.i("s22", String.valueOf(chapterId));
         Log.i("s22", String.valueOf(topicId));
-
-
-
-
         names.add("system");
         text=(AutoCompleteTextView)view.findViewById(R.id.standard_drop);
         ArrayAdapter adapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1,names);
@@ -118,7 +114,13 @@ ArrayList<ParentModel> parentModels;
         titleName=view.findViewById(R.id.title_edit);
         titleName.setText(title);
 
-
+        back=view.findViewById(R.id.back_edit_detials);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
         return  view;
     }
     public void apiInit() {

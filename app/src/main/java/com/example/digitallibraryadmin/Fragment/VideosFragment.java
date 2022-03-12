@@ -65,13 +65,9 @@ public class VideosFragment extends Fragment {
                              Bundle savedInstanceState) {
 // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_videos, container, false);
-//
-//        chapterId = Integer.valueOf(getArguments().getString("chapterIdV"));
-//        topicID = Integer.valueOf(getArguments().getString("topicIdV"));
-//        standardId = Integer.valueOf(getArguments().getString("standardIdV"));
-//        Log.i("chapterv", String.valueOf(chapterId));
-//        Log.i("topicv", String.valueOf(topicID));
-//        Log.i("standardv", String.valueOf(standardId));
+        Log.i("chapterv", String.valueOf(chapterId));
+        Log.i("topicv", String.valueOf(topicId));
+        Log.i("standardv", String.valueOf(standardId));
        novideo=view.findViewById(R.id.no_video_avialbale);
         apiInit();
         getLibrary();
@@ -81,7 +77,6 @@ public class VideosFragment extends Fragment {
                     @Override
                     public void onRefresh() {
                     apiInit();
-                    getLibrary();
                     getLibrary();
                     swipeRefreshLayout.setRefreshing(false);
                     }
@@ -115,7 +110,7 @@ public class VideosFragment extends Fragment {
                 else {
                     videoModel=new ArrayList<>();
                     for (int i = 0; i <= length - 1; i++) {
-                        videoModel.add(new VideoModel(R.drawable.mapchem,R.drawable.ic_baseline_more_vert_24,getLibraryResponse.contents.get(i).title,"12:00"));
+                        videoModel.add(new VideoModel(R.drawable.mapchem,R.drawable.ic_baseline_more_vert_24,getLibraryResponse.contents.get(i).title,"12:00",getLibraryResponse.contents.get(i).link,getLibraryResponse.contents.get(i).file,getLibraryResponse.contents.get(i).status));
                     }
                     buildR();
                 }

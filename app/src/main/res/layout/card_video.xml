@@ -20,7 +20,7 @@
 
         <ImageView
             android:id="@+id/map_chemistry_imageView"
-            android:layout_width="177dp"
+            android:layout_width="158dp"
             android:layout_height="106dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             android:layout_height="18dp"
             android:src="@drawable/play"
             app:layout_constraintBottom_toBottomOf="@+id/map_chemistry_imageView"
-            app:layout_constraintEnd_toEndOf="@+id/map_chemistry_imageView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

@@ -64,5 +64,6 @@ View view;
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("https://docs.google.com/viewer?url="+"https://test-digital-library.s3.ap-south-1.amazonaws.com/"+pdfFile);
+     //   webView.loadUrl("https://youtu.be/mAtkPQO1FcA");
     }
 }

@@ -78,10 +78,8 @@ ImageView back;
         Log.i("standardname",String.valueOf(standardName));
         Log.i("section",String.valueOf(section));
         chapterName=String.valueOf(getArguments().getString("topicName"));
-
         tv1 =view.findViewById(R.id.topic_chapter_name);
         tv1.setText(chapterName);
-
         courseRV = view.findViewById(R.id.idRVCourses);
         back=view.findViewById(R.id.back_no_topic);
         back.setOnClickListener(new View.OnClickListener() {

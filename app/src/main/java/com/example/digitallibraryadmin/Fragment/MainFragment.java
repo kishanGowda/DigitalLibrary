@@ -34,7 +34,6 @@ import retrofit2.Retrofit;
 
 public class MainFragment extends Fragment {
     View view;
-
     ArrayList<Card1Hori> cardHori;
     DashBoardOne homePageGetAllStdResponse;
     RecyclerView recyclerView1;
@@ -42,11 +41,11 @@ public class MainFragment extends Fragment {
 
     RecyclerView.LayoutManager layoutManager1;
     ConstraintLayout cons;
-
+    private RecyclerView.LayoutManager parentLayoutManager;
     private RecyclerView parentRecyclerView;
     private RecyclerView.Adapter ParentAdapter;
     ArrayList<ParentModel> parentModelArrayList;
-    private RecyclerView.LayoutManager parentLayoutManager;
+
 
     Retrofit retrofit;
     LoginService loginService;
@@ -111,7 +110,6 @@ public class MainFragment extends Fragment {
     public void buildRecyclerView2(){
         parentRecyclerView =view.findViewById(R.id.rv_parent);
         parentRecyclerView.setHasFixedSize(true);
-
         parentLayoutManager = new LinearLayoutManager(getContext());
         ParentAdapter = new ParentRecyclerViewAdapter(parentModelArrayList, getContext(),homePageGetAllStdResponse,cons);
         parentRecyclerView.setLayoutManager(parentLayoutManager);
@@ -137,7 +135,6 @@ public class MainFragment extends Fragment {
                 DashBoardOne homePageGetAllStdResponse = response.body();
                 cardHori = new ArrayList<>();
 //                String last=String.valueOf(homePageGetAllStdResponse.totalCount.lastWeekLectureNotesCount);
-
                 cardHori.add(new Card1Hori(R.drawable.notes,homePageGetAllStdResponse.totalCount.toalNotesCount,"Lecture",String.valueOf(homePageGetAllStdResponse.totalCount.lastWeekLectureNotesCount+"  From last week")));
                 cardHori.add(new Card1Hori(R.drawable.videos,homePageGetAllStdResponse.totalCount.totalVideoCount,"videos",String.valueOf(homePageGetAllStdResponse.totalCount.lastWeekVideoCount+"  From last week")));
                 cardHori.add(new Card1Hori(R.drawable.quebank,homePageGetAllStdResponse.totalCount.totalQuesBankCount,"Question",String.valueOf(homePageGetAllStdResponse.totalCount.lastWeekQuestionBankCount+"  From last week")));

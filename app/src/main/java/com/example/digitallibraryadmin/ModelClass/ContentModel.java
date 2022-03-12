@@ -1,13 +1,15 @@
 package com.example.digitallibraryadmin.ModelClass;
 
 public class ContentModel {
-    int image,count;
+    int image,count,id;
     String des;
+
 
     public ContentModel(int image, int count, String des) {
         this.image = image;
         this.count = count;
         this.des = des;
+
     }
 
     public int getImage() {
@@ -33,4 +35,9 @@ public class ContentModel {
     public void setDes(String des) {
         this.des = des;
     }
+
+    public int getId() {
+        return id;
+    }
+
 }

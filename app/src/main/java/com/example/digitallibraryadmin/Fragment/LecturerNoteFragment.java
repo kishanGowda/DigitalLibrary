@@ -127,7 +127,7 @@ public class LecturerNoteFragment extends Fragment {
                     noTopic.setVisibility(View.VISIBLE);
                 } else {
                     for (int i = 0; i <= s - 1; i++) {
-                        lecturerModels.add(new LecturerModel(R.drawable.ic_baseline_more_vert_24, String.valueOf(getLibraryResponse.contents.get(i).title)));
+                        lecturerModels.add(new LecturerModel(R.drawable.ic_baseline_more_vert_24, String.valueOf(getLibraryResponse.contents.get(i).title),getLibraryResponse.contents.get(i).id));
                     }
 
                 }

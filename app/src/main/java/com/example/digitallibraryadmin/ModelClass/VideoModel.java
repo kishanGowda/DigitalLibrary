@@ -2,13 +2,17 @@ package com.example.digitallibraryadmin.ModelClass;
 
 public class VideoModel {
     private int imageView,edit;
-    String infoText,timimgs;
+    String infoText,timimgs,link,file,published;
 
-    public VideoModel(int imageView, int edit, String infoText, String timimgs) {
+    public VideoModel(int imageView, int edit, String infoText, String timimgs,String link,String file,String published) {
         this.imageView = imageView;
         this.edit = edit;
         this.infoText = infoText;
         this.timimgs = timimgs;
+        this.link=link;
+        this.file=file;
+        this.published=published;
+
     }
 
     public int getImageView() {
@@ -41,5 +45,17 @@ public class VideoModel {
 
     public void setTimimgs(String timimgs) {
         this.timimgs = timimgs;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public String getPublished() {
+        return published;
     }
 }
