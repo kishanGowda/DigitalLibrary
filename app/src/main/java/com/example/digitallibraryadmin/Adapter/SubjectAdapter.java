@@ -71,16 +71,11 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new ChapterFragment();
+                String subjectId=String.valueOf(currentCards.getSubjectId());
+                String subjectName=currentCards.getSubjectName();
+                String standardId=String.valueOf(positions);
+                Fragment fragment = new ChapterFragment(subjectId,subjectName,standardId,section,standard);
                 FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
-                Bundle args = new Bundle();
-                args.putString("SubjectId",String.valueOf(currentCards.getSubjectId()));
-                args.putString("SubjectName",currentCards.getSubjectName());
-                args.putString("standardId",String.valueOf(positions));
-                args.putString("section",String.valueOf(section));
-                args.putString("standard",String.valueOf(standard));
-                Log.i("sss", String.valueOf(currentCards.getStandardId()));
-                fragment.setArguments(args);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
                         .setCustomAnimations(
                                 R.anim.slide_in,  // enter

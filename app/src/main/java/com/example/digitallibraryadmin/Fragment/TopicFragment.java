@@ -42,8 +42,9 @@ import retrofit2.Retrofit;
 public class TopicFragment extends Fragment {
 View view;
 int subjectId;
-String  standardid,standardName,section,subjectName;
-String chapterid,chapterName;
+String  standardName,section,subjectName;
+String chapterName;
+int standardid,chapterid;
 LoginService loginService;
 Retrofit retrofit;
     TextView tv1;
@@ -52,7 +53,14 @@ ImageView back;
     private RecyclerView courseRV;
     private TopicModelAdapter adapter;
     private ArrayList<TopicModel> courseModalArrayList;
-    public TopicFragment() {
+    public TopicFragment(int chapterId, int standardId, int subjectId, String topicName, String standardName, String section, String subjectName) {
+        this.chapterid=chapterId;
+        standardid=standardId;
+        this.subjectId=subjectId;
+        chapterName=topicName;
+        this.standardName=standardName;
+        this.section=section;
+        this.subjectName=subjectName;
 
     }
 
@@ -65,19 +73,16 @@ ImageView back;
         TransitionInflater inflate = TransitionInflater.from(requireContext());
         setExitTransition(inflate.inflateTransition(R.transition.fade));
         view= inflater.inflate(R.layout.fragment_topic, container, false);
-        subjectId = Integer.valueOf(getArguments().getString("subjectId"));
+//        subjectId = Integer.valueOf(getArguments().getString("subjectId"));
         Log.i("subject", String.valueOf(subjectId));
-         chapterid = getArguments().getString("chapterId");
         Log.i("name", String.valueOf(chapterid));
-        standardid = String.valueOf(getArguments().getString("standardId"));
-        Log.i("standard",standardid);
-        standardName=getArguments().getString("standardName1");
-        section=getArguments().getString("sectionName1");
-        subjectName=getArguments().getString("subjectName1");
+//        standardName=getArguments().getString("standardName1");
+//        section=getArguments().getString("sectionName1");
+//        subjectName=getArguments().getString("subjectName1");
         Log.i("sbn",String.valueOf(subjectName));
         Log.i("standardname",String.valueOf(standardName));
         Log.i("section",String.valueOf(section));
-        chapterName=String.valueOf(getArguments().getString("topicName"));
+//        chapterName=String.valueOf(getArguments().getString("topicName"));
         tv1 =view.findViewById(R.id.topic_chapter_name);
         tv1.setText(chapterName);
         courseRV = view.findViewById(R.id.idRVCourses);

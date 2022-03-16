@@ -3,9 +3,9 @@ package com.example.digitallibraryadmin.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +27,9 @@ import com.example.digitallibraryadmin.ApiLibrary.DeleteTopicResponse;
 import com.example.digitallibraryadmin.ApiLibrary.GetLibraryResponse;
 import com.example.digitallibraryadmin.ApiLibrary.LoginService;
 import com.example.digitallibraryadmin.Fragment.Edit;
-import com.example.digitallibraryadmin.Fragment.PdfReader;
-import com.example.digitallibraryadmin.Fragment.PdfReaderNote;
 import com.example.digitallibraryadmin.ModelClass.LecturerModel;
 import com.example.digitallibraryadmin.R;
+import com.example.digitallibraryadmin.WebView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 
@@ -83,6 +82,8 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
         LecturerModel modal = lecturerModels.get(position);
         holder.edit.setImageResource(modal.getEdit());
         holder.content.setText(modal.getContent());
+        Log.i("idddd", String.valueOf(modal.getId()));
+
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,15 +93,12 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
                 view= LayoutInflater.from(context).inflate(R.layout.edit,null);
                 bt.setContentView(view);
                 bt.setCanceledOnTouchOutside(true);
-
-
                 TextView edit=bt.findViewById(R.id.edit_topic);
                 TextView delete=bt.findViewById(R.id.delete_topic);
                 delete.setOnClickListener(new View.OnClickListener() {
                                               @Override
                                               public void onClick(View view) {
-
-                                                      apiInit();
+                                                  apiInit();
                                                       DeleteTopicRequest deleteTopicRequest = new DeleteTopicRequest(Integer.valueOf(modal.getId()),1);
                                                       Call<DeleteTopicResponse> call = loginService.deleteCall(deleteTopicRequest);
                                                       call.enqueue(new Callback<DeleteTopicResponse>() {
@@ -113,15 +111,11 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
                                                               Toast.makeText(context,"Topic deleted successfully!", Toast.LENGTH_LONG).show();
 
                                                           }
-
                                                           @Override
                                                           public void onFailure(Call<DeleteTopicResponse> call, Throwable t) {
                                                               Toast.makeText(edit.getContext(), "Error :(", Toast.LENGTH_LONG).show();
                                                           }
                                                       });
-
-
-
                                               }
                                           }
                 );
@@ -129,25 +123,9 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
                 edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Fragment fragment=new Edit();
-                        Log.i("subl11",String.valueOf(subjectName));
-                        Log.i("tnl",String.valueOf(topicName));
-                        Log.i("cnl",String.valueOf(chapterName));
-                        Log.i("sel",String.valueOf(sectionName));
-                        Log.i("stbl",String.valueOf(standardName));
-                        Bundle a=new Bundle();
-                        a.putString("position3",String.valueOf(position));
-                        a.putString("subjectName3",String.valueOf(subjectName));
-                        a.putString("topicName3",String.valueOf(topicName));
-                        a.putString("chapterName3",String.valueOf(chapterName));
-                        a.putString("sectionName3",String.valueOf(sectionName));
-                        a.putString("title3",String.valueOf(modal.getContent()));
-                        a.putString("standardName3",String.valueOf(standardName));
-                        a.putString("standardId",String.valueOf(standardId));
-                        a.putString("subjectId",String.valueOf(subjectId));
-                        a.putString("chapterId",String.valueOf(chapterId));
-                        a.putString("topicId",String.valueOf(topicId));
-                      fragment.setArguments(a);
+
+                        String titleName=modal.getContent();
+                        Fragment fragment=new Edit(subjectName,topicName,chapterName,sectionName,titleName,standardName);
                         FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
                                 .setCustomAnimations(
@@ -168,22 +146,13 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("position", String.valueOf(position));
-                Fragment fragment = new PdfReader();
-                FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
-                Bundle args = new Bundle();
-                pdfFile=getLibraryResponse.contents.get(position).file;
-                args.putString("questionPosition",String.valueOf(pdfFile));
-                args.putString("parameter","question-bank");
-                args.putString("questionName",String.valueOf(modal.getContent()));
-                args.putString("standardIdQuestion",String.valueOf(standardId));
-                args.putString("topicIdQuestion",String.valueOf(topicId));
-                args.putString("chapterIdQuestion",String.valueOf(chapterId));
-                fragment.setArguments(args);
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.your_placeholder, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                String link= "https://docs.google.com/viewer?url="+"https://test-digital-library.s3.ap-south-1.amazonaws.com/"+ modal.getFile();
+                String title=modal.getContent();
+                Log.i("link",link );
+                Intent intent = new Intent(context, WebView.class);
+                intent.putExtra("key",link);
+                intent.putExtra("title",title);
+                context.startActivity(intent);
 
             }
         });

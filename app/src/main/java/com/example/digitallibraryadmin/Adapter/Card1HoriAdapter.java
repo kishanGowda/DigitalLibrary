@@ -9,10 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.digitallibraryadmin.Fragment.EditBottomSheet;
 import com.example.digitallibraryadmin.ModelClass.Card1Hori;
 import com.example.digitallibraryadmin.R;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
@@ -48,8 +52,8 @@ public class Card1HoriAdapter extends RecyclerView.Adapter<Card1HoriAdapter.Card
 //        else {
 //            holder.lastWeek.setTextColor(Color.parseColor(""));
 //        }
-        holder.lastWeek.setText(currentCards.getLastWeek());
-    }
+        holder.lastWeek.setText(currentCards.getLastWeek());}
+
 
     @Override
     public int getItemCount() {

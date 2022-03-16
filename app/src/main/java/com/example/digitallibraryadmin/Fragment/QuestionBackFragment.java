@@ -112,7 +112,7 @@ public class QuestionBackFragment extends Fragment {
                 else {
                     questionModels=new ArrayList<>();
                     for (int i = 0; i <= length - 1; i++) {
-                        questionModels.add(new QuestionModel(R.drawable.ic_baseline_more_vert_24,getLibraryResponse.contents.get(i).title));
+                        questionModels.add(new QuestionModel(R.drawable.ic_baseline_more_vert_24,getLibraryResponse.contents.get(i).title,getLibraryResponse.contents.get(i).id,getLibraryResponse.contents.get(i).file));
 
                     }
                     buildR();
@@ -126,25 +126,12 @@ public class QuestionBackFragment extends Fragment {
         });
     }
 
-
-
-
-
-//    public void forlecturer(){
-//        questionModels=new ArrayList<>();
-//        questionModels.add(new QuestionModel(R.drawable.ic_baseline_more_vert_24,"havdhsvghdvhgsvghadhgsvgdh"));
-//        questionModels.add(new QuestionModel(R.drawable.ic_baseline_more_vert_24,"havdhsvghdvhgsvghadhgsvgdh"));
-//        questionModels.add(new QuestionModel(R.drawable.ic_baseline_more_vert_24,"havdhsvghdvhgsvghadhgsvgdh"));
-//        questionModels.add(new QuestionModel(R.drawable.ic_baseline_more_vert_24,"havdhsvghdvhgsvghadhgsvgdh"));
-//        questionModels.add(new QuestionModel(R.drawable.ic_baseline_more_vert_24,"havdhsvghdvhgsvghadhgsvgdh"));
-//
-//    }
     public  void buildR(){
         recyclerView=view.findViewById(R.id.question_rvvv);
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new QuestionAdapter(questionModels,getContext(),chapterId,standardId,topicId,getLibraryResponse);
+        adapter = new QuestionAdapter(questionModels,getContext(),chapterId,standardId,topicId,getLibraryResponse,subjectName,topicName,chapterName,sectionName,standardName);
         recyclerView.setAdapter(adapter);
 
     }

@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface LoginService {
 
-    String token="Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE1NiwicGhvbmUiOiIrOTE4ODg0ODMxMjg0IiwidXJsIjoidGVzdC50aGVjbGFzc3Jvb20uYml6Iiwib3JnSWQiOiI0Y2IyNTA5ZC03MGY1LTQzNWUtODc5Mi1kMjQ5Mzc3NDNiNTMiLCJicm93c2VyTG9naW5Db2RlIjoiKzkxODg4NDgzMTI4NDExNTZkNDUzYTk3Yi05MzU2LTQ4NWEtOWUxNS0xNWNkOGU2M2JlM2IiLCJkZXZpY2VMb2dpbkNvZGUiOm51bGwsImlhdCI6MTY0Njg4Mzg1NX0.mUygDdGIsG6rptl_dPGb0mBWh951c1_Wd6LBSyWL7hQ";
+    String token="Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEzMywicGhvbmUiOiIrOTE5ODEyMTY4NTk5IiwidXJsIjoidGVzdC50aGVjbGFzc3Jvb20uYml6Iiwib3JnSWQiOiI0Y2IyNTA5ZC03MGY1LTQzNWUtODc5Mi1kMjQ5Mzc3NDNiNTMiLCJicm93c2VyTG9naW5Db2RlIjoiKzkxOTgxMjE2ODU5OTExMzNjNzE2Y2I1MC1hNDgxLTQxMGUtOTY3OC02MTVkMGIxYjUwYjAiLCJkZXZpY2VMb2dpbkNvZGUiOm51bGwsImlhdCI6MTY0NzI1NTg3OH0.MvuRn2Xs5ZGmOtllYBhTD5mcbFVQ6DyANd6tlORsXlc";
     String link="orgurl:test.theclassroom.biz";
 
 
@@ -77,10 +77,15 @@ Call<GetLibraryResponse> getLibraryCall_notes(@Query("topicId")int topicId,@Quer
 
     @Headers({token,link})
     @POST("admin-library/teacher-management")
-    Call<AddTeacherResponsePost> postTeachermngtCall(@Body AddTeacherRequestPost postTeacherManagementRequest);
+    Call<PostUpdateResponse> postTeachermngtCall(@Body AddTeacherRequestPost postTeacherManagementRequest);
+
+    //get subject filter
+    @Headers({token,link})
+    @GET("admin-library/filterSubject")
+    Call<List<SubjectFilterResponse>> subjectFilterCall();
 
 ////getTopic
-//
+
 @Headers({token,link})
 @GET("admin-library/topic-list-by-chapterId")
 Call<List<TopicResponse>> getTopicCall(@Query("chapterId")int chapterId, @Query("subjectId")int subjectId, @Query("standardId")int standardId);
@@ -96,6 +101,23 @@ Call<List<TopicResponse>> getTopicCall(@Query("chapterId")int chapterId, @Query(
     @Headers({token,link})
     @POST("admin-library/topic")
     Call<DeleteTopicResponse> deleteCall(@Body DeleteTopicRequest deleteTopicRequest);
+
+//getStandardBySubjectId
+
+    @Headers({token,link})
+    @GET("admin-library/standardBySubject")
+    Call<List<GetSubjectBySubIdResponse>> getSubjectByCall( @Query("subjectId")int subjectId);
+
+    //filterchapterinsideedit
+
+    @Headers({token,link})
+    @GET("admin-library/filterChapter")
+    Call<List<ChapterfilterResponse>> getchapterByCall(@Query("subjectId")int subjectId, @Query("standardId")int standardId);
+
+    ////Filtertopic
+    @Headers({token,link})
+    @GET("admin-library/filterTopic")
+    Call<List<TopicFilterResponse>> filterTopicResponseCall( @Query("subjectId")int subjectId,@Query("standardId")int standardId,@Query("chapterId")int chapterId);
 
 
 

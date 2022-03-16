@@ -4,11 +4,13 @@ public class LecturerModel {
     int edit;
     String content;
     int id;
+    String file;
 
-    public LecturerModel(int edit, String content,int id) {
+    public LecturerModel(int edit, String content,int id,String file) {
         this.edit = edit;
         this.content = content;
         this.id=id;
+        this.file=file;
     }
 
     public int getEdit() {
@@ -29,5 +31,9 @@ public class LecturerModel {
 
     public int getId() {
         return id;
+    }
+
+    public String getFile() {
+        return file;
     }
 }

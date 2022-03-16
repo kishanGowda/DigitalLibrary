@@ -110,7 +110,7 @@ public class VideosFragment extends Fragment {
                 else {
                     videoModel=new ArrayList<>();
                     for (int i = 0; i <= length - 1; i++) {
-                        videoModel.add(new VideoModel(R.drawable.mapchem,R.drawable.ic_baseline_more_vert_24,getLibraryResponse.contents.get(i).title,"12:00",getLibraryResponse.contents.get(i).link,getLibraryResponse.contents.get(i).file,getLibraryResponse.contents.get(i).status));
+                        videoModel.add(new VideoModel(R.drawable.mapchem,R.drawable.ic_baseline_more_vert_24,getLibraryResponse.contents.get(i).title,"12:00",getLibraryResponse.contents.get(i).link,getLibraryResponse.contents.get(i).file,getLibraryResponse.contents.get(i).status,getLibraryResponse.contents.get(i).id));
                     }
                     buildR();
                 }
@@ -128,7 +128,7 @@ public class VideosFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
-        adapter1 = new VideosAdapter(videoModel,getContext());
+        adapter1 = new VideosAdapter(videoModel,getContext(),subjectName,topicName,chapterName,sectionName,standardName);
         recyclerView.setAdapter(adapter1);}
 
 }

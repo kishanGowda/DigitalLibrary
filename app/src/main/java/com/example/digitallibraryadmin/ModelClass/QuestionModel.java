@@ -3,10 +3,15 @@ package com.example.digitallibraryadmin.ModelClass;
 public class QuestionModel {
     private int imageView;
     String infoText;
+    int id;
+    String file;
 
-    public QuestionModel(int imageView, String infoText) {
+    public QuestionModel(int imageView, String infoText,int id,String file) {
         this.imageView = imageView;
         this.infoText = infoText;
+        this.id=id;
+        this.file=file;
+
     }
 
     public int getImageView() {
@@ -23,5 +28,13 @@ public class QuestionModel {
 
     public void setInfoText(String infoText) {
         this.infoText = infoText;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFile() {
+        return file;
     }
 }

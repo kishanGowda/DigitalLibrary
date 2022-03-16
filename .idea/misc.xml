@@ -6,16 +6,20 @@
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/background_shape_for_bottomsheet.xml" value="0.1295" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/dailog_bg.xml" value="0.129" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1295" />
+        <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.1435" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/rounded_button.xml" value="0.129" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/rounded_button_color_white.xml" value="0.1265" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/slide_down.xml" value="0.1265" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/slide_up.xml" value="0.1" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/drawable/stroke_box.xml" value="0.129" />
+        <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout-land/activity_web_view.xml" value="0.19" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout-land/fragment_youtube.xml" value="0.24322916666666666" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout-land/youtube.xml" value="0.24322916666666666" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/activity_main2.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/activity_search.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/activity_video.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/activity_web_view.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/broad_cast.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/card1hori.xml" value="0.153125" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/card_video.xml" value="0.2660668380462725" />
@@ -32,6 +36,7 @@
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/fragment_edit.xml" value="0.25" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/fragment_edit_bottom_sheet.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/fragment_edit_bottom_sheet2.xml" value="0.19947916666666668" />
+        <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/fragment_edit_bottom_sheet3.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/fragment_edit_topic.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/fragment_lecturer_note.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/fragment_library.xml" value="0.2" />
@@ -53,7 +58,7 @@
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/subject_fragment_page3.xml" value="0.14" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/subject_mathematics_layout.xml" value="0.25" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/subjects_layout.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/suggest_item.xml" value="0.67" />
+        <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/suggest_item.xml" value="0.25" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/layout/track_selection_dialog.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Kishan/AndroidStudioProjects/DigitalLibraryAdmin/app/src/main/res/menu/menu.xml" value="0.20416666666666666" />

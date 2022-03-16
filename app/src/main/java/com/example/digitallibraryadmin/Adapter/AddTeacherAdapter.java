@@ -53,7 +53,7 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
 
     public interface OnItemClickListener {
         void onItemClickListener(int position);
-        void onDeleteClick(int position, String teacherName);
+        void onDeleteClick(int position, String teacherName, int id);
         void onNameClick(int position);
     }
 
@@ -79,7 +79,7 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
                     if (listener != null) {
                         int position = getAbsoluteAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onNameClick(   position);
+                            listener.onNameClick(position);
 
                         }
 
@@ -106,7 +106,7 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
                     if (listener != null) {
                         int position = getAbsoluteAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position,modal.getTeacherName());
+                            listener.onDeleteClick(position,modal.getTeacherName(),modal.getId());
 
                         }
 

@@ -3,8 +3,9 @@ package com.example.digitallibraryadmin.ModelClass;
 public class VideoModel {
     private int imageView,edit;
     String infoText,timimgs,link,file,published;
+    int id;
 
-    public VideoModel(int imageView, int edit, String infoText, String timimgs,String link,String file,String published) {
+    public VideoModel(int imageView, int edit, String infoText, String timimgs,String link,String file,String published,int id) {
         this.imageView = imageView;
         this.edit = edit;
         this.infoText = infoText;
@@ -12,6 +13,7 @@ public class VideoModel {
         this.link=link;
         this.file=file;
         this.published=published;
+        this.id=id;
 
     }
 
@@ -57,5 +59,9 @@ public class VideoModel {
 
     public String getPublished() {
         return published;
+    }
+
+    public int getId() {
+        return id;
     }
 }

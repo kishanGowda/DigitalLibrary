@@ -53,11 +53,19 @@ public class LibraryFragment extends Fragment {
     ContentAdapter adapter1;
     GetLibraryResponse getLibraryResponse;
     ArrayList<ContentModel> contentModels;
-    private int chapterId, topicID, standardId,subjectId;
+    private int chapterId, topicId, standardId,subjectId;
     String subjectName,topicName,chapterName,standardName,sectionName;
 
-    public LibraryFragment() {
-
+    public LibraryFragment(int topicId, int chapterId, int standardId, String topicName, String chapterName, String standardName, String section, String subjectName, int subjectId) {
+            this.topicId=topicId;
+            this.chapterId=chapterId;
+            this.standardId=standardId;
+            this.topicName=topicName;
+            this.chapterName=chapterName;
+            this.standardName=standardName;
+            sectionName=section;
+            this.subjectName=subjectName;
+            this.subjectId=subjectId;
     }
 
 
@@ -80,7 +88,7 @@ public class LibraryFragment extends Fragment {
 
         TextView tv1 = view.findViewById(R.id.topic_libary_name);
         tv1.setText(topicName);
-
+        getLibrary();
         return view;
     }
 
@@ -91,8 +99,9 @@ public class LibraryFragment extends Fragment {
 
 
     public void getLibrary() {
+        Log.i("topic", String.valueOf(topicId));
 
-        Call<GetLibraryResponse> call = loginService.getLibraryCall(topicID, standardId, chapterId);
+        Call<GetLibraryResponse> call = loginService.getLibraryCall(topicId, standardId, chapterId);
         call.enqueue(new Callback<GetLibraryResponse>() {
             @Override
             public void onResponse(Call<GetLibraryResponse> call, Response<GetLibraryResponse> response) {
@@ -118,7 +127,7 @@ public class LibraryFragment extends Fragment {
                 pa.setAdapter(sa);
                 TabLayout tabLayout = view.findViewById(R.id.tabLayout);
                 //
-                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Lecturer("+notes+")")));
+                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Lecture notes("+notes+")")));
                 tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("videos("+video+")")));
                 tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Question("+question+")")));
                 //
@@ -145,24 +154,6 @@ public class LibraryFragment extends Fragment {
                     }
                 });
 
-
-                //
-//                tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-//                MyAdapter adapter = new MyAdapter(getContext(),getParentFragmentManager(), tabLayout.getTabCount(),subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicID, standardId,subjectId);
-//                viewPager.setAdapter(adapter);
-//                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//                tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//                    @Override
-//                    public void onTabSelected(TabLayout.Tab tab) {
-//                        viewPager.setCurrentItem(tab.getPosition());
-//                    }
-//                    @Override
-//                    public void onTabUnselected(TabLayout.Tab tab) {
-//                    }
-//                    @Override
-//                    public void onTabReselected(TabLayout.Tab tab) {
-//                    }
-//                });
             }
             @Override
             public void onFailure(Call<GetLibraryResponse> call, Throwable t) {
@@ -194,15 +185,15 @@ public class LibraryFragment extends Fragment {
         public Fragment createFragment(int position) {
             // Hardcoded in this order, you'll want to use lists and make sure the titles match
             if (position == 0) {
-                LecturerNoteFragment fragment = new LecturerNoteFragment(subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicID, standardId,subjectId);
+                LecturerNoteFragment fragment = new LecturerNoteFragment(subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicId, standardId,subjectId);
                 return fragment;
 
 
             }
             if (position == 1) {
-                return new VideosFragment(subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicID, standardId,subjectId);
+                return new VideosFragment(subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicId, standardId,subjectId);
             }
-            return new QuestionBackFragment(subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicID, standardId,subjectId);
+            return new QuestionBackFragment(subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicId, standardId,subjectId);
         }
 
         @Override

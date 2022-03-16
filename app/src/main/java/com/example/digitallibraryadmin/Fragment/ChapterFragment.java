@@ -49,9 +49,9 @@ public class ChapterFragment extends Fragment {
   ChapterDetailsAdapter chapterDetailsAdapter;
   ArrayList<ChapterDetails> chapterdetails;
   RecyclerView.LayoutManager layoutManager;
-  int subjectId;
+  String subjectId;
   LinearLayout linearLayout;
-  String standardName2,section2;
+  String standardName,section;
   Button addTeacher,later;
 
 
@@ -61,10 +61,16 @@ public class ChapterFragment extends Fragment {
   ImageView setting;
   //back
   ImageView back;
-  String standardid;
+  String standardId;
   String subjectName;
 
-  public ChapterFragment() {
+  public ChapterFragment(String subjectId, String subjectName, String standardId, String section, String standard) {
+        this.subjectId=subjectId;
+        this.subjectName=subjectName;
+        this.standardId=standardId;
+       this. section=section;
+       standardName=standard;
+
 
   }
 
@@ -72,19 +78,15 @@ public class ChapterFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
+    view = inflater.inflate(R.layout.fragment_chapter, container, false);
     TransitionInflater inflate = TransitionInflater.from(requireContext());
     setExitTransition(inflate.inflateTransition(R.transition.fade));
-    view = inflater.inflate(R.layout.fragment_chapter, container, false);
-    subjectId = Integer.valueOf(getArguments().getString("SubjectId"));
-    subjectName = getArguments().getString("SubjectName");
-    standardid = String.valueOf(getArguments().getString("standardId"));
-    standardName2=getArguments().getString("standard");
-    section2=getArguments().getString("section");
+
     Log.i("subject", String.valueOf(subjectId));
-    Log.i("standardnameChapter", String.valueOf(standardName2));
-    Log.i("sectionchapter", String.valueOf(section2));
+    Log.i("standardnameChapter", String.valueOf(standardName));
+    Log.i("sectionchapter", String.valueOf(section));
     Log.i("name", String.valueOf(subjectName));
-    Log.i("standardId", standardid);
+    Log.i("standardId", standardId);
     setting=view.findViewById(R.id.setting_subject);
     back=view.findViewById(R.id.back_chapter_detials);
     back.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +134,7 @@ public class ChapterFragment extends Fragment {
 
   public void createCard() {
     chapterdetails = new ArrayList<>();
-    Call<ChapterListResponse> call = loginService.chapterListCall(subjectId, Integer.valueOf(standardid));
+    Call<ChapterListResponse> call = loginService.chapterListCall(Integer.valueOf(subjectId), Integer.valueOf(standardId));
 
     call.enqueue(new Callback<ChapterListResponse>() {
       @Override
@@ -171,9 +173,9 @@ public class ChapterFragment extends Fragment {
     recyclerView.setHasFixedSize(true);
     layoutManager = new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false);
     recyclerView.setLayoutManager(layoutManager);
-    chapterDetailsAdapter = new ChapterDetailsAdapter(chapterdetails, getContext(),subjectId,standardid,section2,standardName2,subjectName);
-    Log.i("section2",section2);
-    Log.i("standard2",standardName2);
+    chapterDetailsAdapter = new ChapterDetailsAdapter(chapterdetails, getContext(),Integer.valueOf(subjectId),standardId,section,standardName,subjectName);
+    Log.i("section2",section);
+    Log.i("standard2",standardName);
     recyclerView.setAdapter(chapterDetailsAdapter);
   }
   public void settings(){
@@ -195,15 +197,8 @@ public class ChapterFragment extends Fragment {
       @Override
       public void onClick(View view) {
         dialog.dismiss();
-        Fragment fragment = new AddTeacher();
+        Fragment fragment = new AddTeacher(Integer.valueOf(standardId),Integer.valueOf(subjectId),subjectName,standardName,section);
         FragmentManager fragmentManager = ((FragmentActivity) getActivity()).getSupportFragmentManager();
-        Bundle args = new Bundle();
-        args.putString("standardId", standardid);
-        args.putString("subjectId", String.valueOf(subjectId));
-        args.putString("subjectName",subjectName);
-        args.putString("standardName",standardName2);
-        args.putString("section",section2);
-        fragment.setArguments(args);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
                 .setCustomAnimations(
                         R.anim.slide_in,  // enter

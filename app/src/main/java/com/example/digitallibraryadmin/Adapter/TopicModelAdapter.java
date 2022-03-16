@@ -49,17 +49,18 @@ public class TopicModelAdapter extends RecyclerView.Adapter<TopicModelAdapter.Vi
     private ArrayList<TopicModel> courseModalArrayList;
     private Context context;
     private OnItemClickListener onItemClickListener;
-    String standardId,subjectName;
+    int standardId,chapterId;
+            String subjectName;
     View sheetView;
      BottomSheetDialog bt,btnew;
      int subjectId;
      LoginService loginService;
      Retrofit retrofit;
     BottomSheetDialog mBottomSheetDialog;
-    String chapterId,standardName,section,chapterName;
+    String standardName,section,chapterName;
 
     // creating a constructor for our variables.
-    public TopicModelAdapter(ArrayList<TopicModel> courseModalArrayList, Context context, String standardid, String chapterid, String standardName, String section, String subjectName, String chapterName, int subjectId) {
+    public TopicModelAdapter(ArrayList<TopicModel> courseModalArrayList, Context context, int standardid, int chapterid, String standardName, String section, String subjectName, String chapterName, int subjectId) {
         this.courseModalArrayList = courseModalArrayList;
         this.context = context;
         this.standardId=standardid;
@@ -182,22 +183,13 @@ public class TopicModelAdapter extends RecyclerView.Adapter<TopicModelAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new LibraryFragment();
+                int topicId=Integer.valueOf(modal.getTopicId());
+                String topicName=String.valueOf(modal.getCourseDescription());
+                Fragment fragment = new LibraryFragment(topicId,chapterId,standardId,topicName,chapterName,standardName,section,subjectName,subjectId);
                 FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
-                Bundle args = new Bundle();
-                args.putString("topicId",String.valueOf(modal.getTopicId()));
-                args.putString("chapterId",String.valueOf(chapterId));
-                args.putString("standardId",String.valueOf(standardId));
-                args.putString("topicName",String.valueOf(modal.getCourseDescription()));
-                args.putString("chapterName",String.valueOf(chapterName));
-                args.putString("standardTopicName",standardName);
-                args.putString("sectionTopic",section);
-                args.putString("subjectNameTopic",String.valueOf(subjectName));
-                args.putString("subjectTopicId",String.valueOf(subjectId));
-                Log.i("t",chapterId);
-                Log.i("a",standardId);
+                Log.i("t",String.valueOf(chapterId));
+                Log.i("a",String.valueOf(standardId));
                 Log.i("s", modal.getTopicId());
-                fragment.setArguments(args);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
                         .setCustomAnimations(
                                 R.anim.slide_in,  // enter

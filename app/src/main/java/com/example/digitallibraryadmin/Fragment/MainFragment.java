@@ -73,6 +73,7 @@ public class MainFragment extends Fragment {
                     }
                 }
         );
+
         return view;
 
     }
@@ -160,6 +161,7 @@ public class MainFragment extends Fragment {
         recyclerView1.setLayoutManager(layoutManager1);
         cardHoriAdapter = new Card1HoriAdapter(cardHori);
         recyclerView1.setAdapter(cardHoriAdapter);
+        recyclerView1.setNestedScrollingEnabled(false);
     }
 
 

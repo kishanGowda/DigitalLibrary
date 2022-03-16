@@ -65,16 +65,12 @@ public class ChapterDetailsAdapter extends RecyclerView.Adapter<ChapterDetailsAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new TopicFragment();
+                int chapterId= Integer.valueOf(currentCards.getChapterId());
+                int standardId= Integer.valueOf(standardid);
+                String topicName=currentCards.getAboutChapter();
+                Fragment fragment = new TopicFragment(chapterId,standardId,subjectId,topicName,standardName,section,subjectName);
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                 Bundle args = new Bundle();
-                args.putString("chapterId", String.valueOf(currentCards.getChapterId()));
-                args.putString("standardId", standardid);
-                args.putString("subjectId", String.valueOf(subjectId));
-                args.putString("topicName", currentCards.getAboutChapter());
-                args.putString("standardName1", String.valueOf(standardName));
-                args.putString("sectionName1", String.valueOf(section));
-                args.putString("subjectName1",String.valueOf(subjectName));
                 Log.i("onClickStandard", standardName);
                 Log.i("OnclickStandard", section);
                 fragment.setArguments(args);

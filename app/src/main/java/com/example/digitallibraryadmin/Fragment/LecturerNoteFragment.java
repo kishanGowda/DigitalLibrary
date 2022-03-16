@@ -78,15 +78,15 @@ public class LecturerNoteFragment extends Fragment {
 //        chapterName = getArguments().getString("chapterName");
 //        standardName = getArguments().getString("standardName");
 //        sectionName = getArguments().getString("sectionTopic");
-        Log.i("chapter1", String.valueOf(chapterId));
-        Log.i("topic1", String.valueOf(topicId));
-        Log.i("standard1", String.valueOf(standardId));
-        Log.i("subjecr", String.valueOf(subjectId));
-        Log.i("subl", subjectName);
-        Log.i("tnl", String.valueOf(topicName));
-        Log.i("cnl", chapterName);
-        Log.i("sel", sectionName);
-        Log.i("stbl", standardName);
+//        Log.i("chapter1", String.valueOf(chapterId));
+//        Log.i("topic1", String.valueOf(topicId));
+//        Log.i("standard1", String.valueOf(standardId));
+//        Log.i("subjecr", String.valueOf(subjectId));
+//        Log.i("subl", subjectName);
+//        Log.i("tnl", String.valueOf(topicName));
+//        Log.i("cnl", chapterName);
+//        Log.i("sel", sectionName);
+//        Log.i("stbl", standardName);
         noTopic = view.findViewById(R.id.no_topic_avialbale);
 
 
@@ -127,7 +127,7 @@ public class LecturerNoteFragment extends Fragment {
                     noTopic.setVisibility(View.VISIBLE);
                 } else {
                     for (int i = 0; i <= s - 1; i++) {
-                        lecturerModels.add(new LecturerModel(R.drawable.ic_baseline_more_vert_24, String.valueOf(getLibraryResponse.contents.get(i).title),getLibraryResponse.contents.get(i).id));
+                        lecturerModels.add(new LecturerModel(R.drawable.ic_baseline_more_vert_24, String.valueOf(getLibraryResponse.contents.get(i).title),getLibraryResponse.contents.get(i).id,getLibraryResponse.contents.get(i).file));
                     }
 
                 }

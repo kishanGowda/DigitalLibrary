@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.Edit">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,16 +60,29 @@
             app:layout_constraintTop_toBottomOf="@id/phone_tv">
 
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="40dp"
-                android:background="@color/white"
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="40dp"-->
+<!--                android:background="@color/white"-->
+<!--                android:id="@+id/name"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/close"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+            <AutoCompleteTextView
                 android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textColorHint="#AEAEAE"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/close"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/close"
@@ -141,7 +156,7 @@
             app:layout_constraintTop_toBottomOf="@id/phone_tv">
 
 
-            <EditText
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="40dp"
@@ -209,7 +224,6 @@
             android:textStyle="bold"
             android:text="Title" />
 
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -221,8 +235,15 @@
             android:layout_marginEnd="18dp"
             android:id="@+id/title_edit"/>
 
-
-
-
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="18dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:text="Save" />
     </LinearLayout>
+</ScrollView>
 </FrameLayout>
+
