@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ import retrofit2.Retrofit;
 public class LecturerNoteFragment extends Fragment {
 
     RecyclerView recyclerView;
-    ArrayList<LecturerModel> lecturerModels = new ArrayList<>();
+    ArrayList<LecturerModel> lecturerModels ;
     RecyclerView.LayoutManager layoutManager;
     LecturerAdapter adapter;
     View view;
@@ -48,7 +49,8 @@ public class LecturerNoteFragment extends Fragment {
     int notes;
 
 
-    public LecturerNoteFragment(String subjectName, String topicName, String chapterName, String standardName, String sectionName, int chapterId, int topicID, int standardId, int subjectId) {
+    public LecturerNoteFragment(String subjectName, String topicName, String chapterName, String standardName, String sectionName, int chapterId,
+                                int topicID, int standardId, int subjectId) {
         this.subjectName=subjectName;
         this.topicName=topicName;
         this.chapterName=chapterName;
@@ -66,27 +68,6 @@ public class LecturerNoteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_lecturer_note, container, false);
-
-//        chapterId = Integer.valueOf(getArguments().getString("chapterId"));
-//        topicId = Integer.valueOf(getArguments().getString("topicId"));
-//        standardId = Integer.valueOf(getArguments().getString("standardId"));
-//        subjectId = Integer.valueOf(getArguments().getString("subjectId"));
-//
-//
-//        subjectName = getArguments().getString("subjectNameTopic");
-//        topicName = getArguments().getString("topicName");
-//        chapterName = getArguments().getString("chapterName");
-//        standardName = getArguments().getString("standardName");
-//        sectionName = getArguments().getString("sectionTopic");
-//        Log.i("chapter1", String.valueOf(chapterId));
-//        Log.i("topic1", String.valueOf(topicId));
-//        Log.i("standard1", String.valueOf(standardId));
-//        Log.i("subjecr", String.valueOf(subjectId));
-//        Log.i("subl", subjectName);
-//        Log.i("tnl", String.valueOf(topicName));
-//        Log.i("cnl", chapterName);
-//        Log.i("sel", sectionName);
-//        Log.i("stbl", standardName);
         noTopic = view.findViewById(R.id.no_topic_avialbale);
 
 
@@ -94,6 +75,17 @@ public class LecturerNoteFragment extends Fragment {
         apiInit();
         getLibrary();
         //buildR();
+
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayoutSubjet);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getLibrary();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
 
 
         return view;
@@ -109,42 +101,53 @@ public class LecturerNoteFragment extends Fragment {
 
 
     public void getLibrary() {
-        Call<GetLibraryResponse> call = loginService.getLibraryCall_notes(topicId, standardId, chapterId, "lecture-notes");
-        call.enqueue(new Callback<GetLibraryResponse>() {
-            @Override
-            public void onResponse(Call<GetLibraryResponse> call, Response<GetLibraryResponse> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
-                }
-                getLibraryResponse = response.body();
-                ArrayList<Content> contents = getLibraryResponse.contents;
-                length = 0;
-                int s=Integer.valueOf(getLibraryResponse.totalCount.get(0).notesCount);
-                length = contents.size();
-                Log.i("si", String.valueOf(s));
 
-                if (s == 0) {
-                    noTopic.setVisibility(View.VISIBLE);
-                } else {
-                    for (int i = 0; i <= s - 1; i++) {
-                        lecturerModels.add(new LecturerModel(R.drawable.ic_baseline_more_vert_24, String.valueOf(getLibraryResponse.contents.get(i).title),getLibraryResponse.contents.get(i).id,getLibraryResponse.contents.get(i).file));
+        try {
+
+
+            Call<GetLibraryResponse> call = loginService.getLibraryCall_notes(topicId, standardId, chapterId, "lecture-notes");
+            call.enqueue(new Callback<GetLibraryResponse>() {
+                @Override
+                public void onResponse(Call<GetLibraryResponse> call, Response<GetLibraryResponse> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
+                    }
+                    getLibraryResponse = response.body();
+                    ArrayList<Content> contents = getLibraryResponse.contents;
+                    length = 0;
+                    int s = Integer.valueOf(getLibraryResponse.totalCount.get(0).notesCount);
+                    length = contents.size();
+                    Log.i("si", String.valueOf(s));
+
+
+                    if (s == 0) {
+                        noTopic.setVisibility(View.VISIBLE);
+                    } else {
+                        lecturerModels = new ArrayList<>();
+                        for (int i = 0; i <= s - 1; i++) {
+                            lecturerModels.add(new LecturerModel(R.drawable.ic_baseline_more_vert_24, String.valueOf(getLibraryResponse.contents.get(i).title), getLibraryResponse.contents.get(i).id, getLibraryResponse.contents.get(i).file));
+                        }
+                        buildR();
+
                     }
 
+
                 }
-                buildR();
-                Log.i("rSize", String.valueOf(lecturerModels.size()));
-            }
 
-            @Override
-            public void onFailure(Call<GetLibraryResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
+                @Override
+                public void onFailure(Call<GetLibraryResponse> call, Throwable t) {
+                    Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
 
-            }
-        });
+                }
+            });
+        }catch (Exception e){
+
+        }
 
     }
 
     public void buildR() {
+        String type="lecture-notes";
         recyclerView = view.findViewById(R.id.lecturernotervv);
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getContext(), 2);

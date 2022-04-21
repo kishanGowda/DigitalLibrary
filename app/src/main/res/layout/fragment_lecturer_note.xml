@@ -6,6 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.LecturerNoteFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayoutSubjet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <LinearLayout
 
@@ -16,6 +21,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/lecturernotervv"/>
     </LinearLayout>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,7 +61,6 @@
             android:text="There are no content uploaded yet." />
 
     </LinearLayout>
-
 
 
 </FrameLayout>

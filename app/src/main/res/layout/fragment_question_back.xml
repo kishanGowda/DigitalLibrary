@@ -6,12 +6,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.QuestionBackFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayoutSubjet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:id="@+id/question_rvvv"/>
 
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +42,7 @@
             android:textColor="@color/black"
             android:textSize="18dp"
             android:layout_marginTop="24dp"
-            android:text="No question uploaded!" />
+            android:text="No question banks uploaded!" />
 
         <TextView
             android:id="@+id/textView7"

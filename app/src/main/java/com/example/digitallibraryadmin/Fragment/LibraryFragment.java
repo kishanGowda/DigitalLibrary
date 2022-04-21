@@ -89,6 +89,19 @@ public class LibraryFragment extends Fragment {
         TextView tv1 = view.findViewById(R.id.topic_libary_name);
         tv1.setText(topicName);
         getLibrary();
+        tab();
+
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayoutLibrary);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getLibrary();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                }
+        );
         return view;
     }
 
@@ -118,51 +131,77 @@ public class LibraryFragment extends Fragment {
                 contentModels.add(new ContentModel(R.drawable.lecturevideos, video, "Videos"));
                 contentModels.add(new ContentModel(R.drawable.questionbank, question, "Question Bank"));
                 build();
-//                tabLayout = (TabLayout) view.findViewById(R.id.simpleTabLayout);
-//                viewPager=(ViewPager)view.findViewById(R.id.viewPager);
-                //
-                FragmentManager fm = getParentFragmentManager();
-                ViewStateAdapter sa = new ViewStateAdapter(fm, getLifecycle());
-                final ViewPager2 pa =view. findViewById(R.id.pager);
-                pa.setAdapter(sa);
-                TabLayout tabLayout = view.findViewById(R.id.tabLayout);
-                //
-                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Lecture notes("+notes+")")));
-                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("videos("+video+")")));
-                tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Question("+question+")")));
-                //
-                tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        pa.setCurrentItem(tab.getPosition());
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-
-                    }
-                });
-                pa.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        tabLayout.selectTab(tabLayout.getTabAt(position));
-                    }
-                });
-
             }
+
             @Override
             public void onFailure(Call<GetLibraryResponse> call, Throwable t) {
                 Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
 
             }
         });
-
     }
+
+        public void tab(){
+
+            Call<GetLibraryResponse> call = loginService.getLibraryCall(topicId, standardId, chapterId);
+            call.enqueue(new Callback<GetLibraryResponse>() {
+                @Override
+                public void onResponse(Call<GetLibraryResponse> call, Response<GetLibraryResponse> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
+                    }
+                    getLibraryResponse = response.body();
+                    notes = Integer.valueOf(getLibraryResponse.totalCount.get(0).notesCount);
+                    video = Integer.valueOf(getLibraryResponse.totalCount.get(0).videoCount);
+                    question = Integer.valueOf(getLibraryResponse.totalCount.get(0).quesBankCount);
+
+
+                    FragmentManager fm = getParentFragmentManager();
+                    ViewStateAdapter sa = new ViewStateAdapter(fm, getLifecycle());
+                    final ViewPager2 pa = view.findViewById(R.id.pager);
+                    pa.setAdapter(sa);
+                    TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+                    //
+                    tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Lecture notes(" + notes + ")")));
+                    tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("videos(" + video + ")")));
+                    tabLayout.addTab(tabLayout.newTab().setText(String.valueOf("Question banks(" + question + ")")));
+                    //
+                    tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                        @Override
+                        public void onTabSelected(TabLayout.Tab tab) {
+                            pa.setCurrentItem(tab.getPosition());
+                        }
+
+                        @Override
+                        public void onTabUnselected(TabLayout.Tab tab) {
+
+                        }
+
+                        @Override
+                        public void onTabReselected(TabLayout.Tab tab) {
+
+                        }
+                    });
+                    pa.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            tabLayout.selectTab(tabLayout.getTabAt(position));
+                        }
+                    });
+                }
+
+
+                @Override
+                public void onFailure(Call<GetLibraryResponse> call, Throwable t) {
+                    Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+
+        }
+
+
 
 
     private void build() {
@@ -187,8 +226,6 @@ public class LibraryFragment extends Fragment {
             if (position == 0) {
                 LecturerNoteFragment fragment = new LecturerNoteFragment(subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicId, standardId,subjectId);
                 return fragment;
-
-
             }
             if (position == 1) {
                 return new VideosFragment(subjectName,topicName,chapterName,standardName,sectionName,chapterId, topicId, standardId,subjectId);

@@ -22,8 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.digitallibraryadmin.ApiLibrary.ApiClient;
-import com.example.digitallibraryadmin.ApiLibrary.DeleteTopicRequest;
-import com.example.digitallibraryadmin.ApiLibrary.DeleteTopicResponse;
+import com.example.digitallibraryadmin.ApiLibrary.DeleteResponse;
 import com.example.digitallibraryadmin.ApiLibrary.GetLibraryResponse;
 import com.example.digitallibraryadmin.ApiLibrary.LoginService;
 import com.example.digitallibraryadmin.Fragment.Edit;
@@ -52,9 +51,13 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
     GetLibraryResponse getLibraryResponse;
     String standardName,sectionName,subjectName,chapterName,topicName;
     int standardId,subjectId,chapterId,topicId;
+    String type;
 
 
-    public LecturerAdapter(ArrayList<LecturerModel> lecturerModels, Context context, GetLibraryResponse getLibraryResponse, String standardName, String sectionName, String subjectName, String chapterName, String topicName, int standardId, int subjectId, int chapterId, int topicId) {
+    public LecturerAdapter(ArrayList<LecturerModel> lecturerModels, Context context,
+                           GetLibraryResponse getLibraryResponse, String standardName, String sectionName,
+                           String subjectName, String chapterName, String topicName, int standardId, int subjectId,
+                           int chapterId, int topicId) {
         this.lecturerModels = lecturerModels;
         this.context = context;
        this.getLibraryResponse=getLibraryResponse;
@@ -67,6 +70,7 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
        this.subjectId=subjectId;
        this.chapterId=chapterId;
        this.topicId=topicId;
+       this.type=type;
     }
 
     @NonNull
@@ -99,25 +103,27 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
                                               @Override
                                               public void onClick(View view) {
                                                   apiInit();
-                                                      DeleteTopicRequest deleteTopicRequest = new DeleteTopicRequest(Integer.valueOf(modal.getId()),1);
-                                                      Call<DeleteTopicResponse> call = loginService.deleteCall(deleteTopicRequest);
-                                                      call.enqueue(new Callback<DeleteTopicResponse>() {
+                                                  bt.dismiss();
+                                                      Call<DeleteResponse> call = loginService.deleteLibraryTopic(Integer.valueOf(modal.getId()));
+                                                      call.enqueue(new Callback<DeleteResponse>() {
                                                           @Override
-                                                          public void onResponse(Call<DeleteTopicResponse> call, Response<DeleteTopicResponse> response) {
+                                                          public void onResponse(Call<DeleteResponse> call, Response<DeleteResponse> response) {
                                                               if (!response.isSuccessful()) {
                                                                   Toast.makeText(context, response.code(), Toast.LENGTH_LONG).show();
                                                               }
-                                                              DeleteTopicResponse deleteTopicResponse = response.body();
-                                                              Toast.makeText(context,"Topic deleted successfully!", Toast.LENGTH_LONG).show();
+                                                              DeleteResponse deleteTopicResponse = response.body();
+                                                              Toast.makeText(context,deleteTopicResponse.show.message, Toast.LENGTH_LONG).show();
 
                                                           }
                                                           @Override
-                                                          public void onFailure(Call<DeleteTopicResponse> call, Throwable t) {
+                                                          public void onFailure(Call<DeleteResponse> call, Throwable t) {
                                                               Toast.makeText(edit.getContext(), "Error :(", Toast.LENGTH_LONG).show();
                                                           }
                                                       });
                                               }
+
                                           }
+
                 );
 
                 edit.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +131,10 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.Myview
                     public void onClick(View view) {
 
                         String titleName=modal.getContent();
-                        Fragment fragment=new Edit(subjectName,topicName,chapterName,sectionName,titleName,standardName);
+                        String file=modal.getFile();
+                        String type="lecture-notes";
+                        int id=modal.getId();
+                        Fragment fragment=new Edit(subjectName,topicName,chapterName,sectionName,titleName,standardName,standardId,file,type,id,subjectId,chapterId,topicId);
                         FragmentManager fragmentManager = ((FragmentActivity)context).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
                                 .setCustomAnimations(

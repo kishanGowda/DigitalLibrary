@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,6 +83,18 @@ public class QuestionBackFragment extends Fragment {
         Log.i("topic2", String.valueOf(topicId));
         Log.i("standard2", String.valueOf(standardId));
         getLibrary();
+
+
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayoutSubjet);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getLibrary();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
         return view;
 
     }
@@ -131,7 +144,7 @@ public class QuestionBackFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new QuestionAdapter(questionModels,getContext(),chapterId,standardId,topicId,getLibraryResponse,subjectName,topicName,chapterName,sectionName,standardName);
+        adapter = new QuestionAdapter(questionModels,getContext(),chapterId,standardId,topicId,getLibraryResponse,subjectName,topicName,chapterName,sectionName,standardName,subjectId);
         recyclerView.setAdapter(adapter);
 
     }

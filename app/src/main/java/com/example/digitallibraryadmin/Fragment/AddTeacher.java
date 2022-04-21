@@ -44,7 +44,7 @@ import retrofit2.Retrofit;
 
 public class AddTeacher extends Fragment {
     View view;
-    Button addButton;
+    Button addButton,saveButton;
     RecyclerView recyclerView;
     AddTeacherAdapter adapters;
     int deletedIdIn;
@@ -107,6 +107,15 @@ public class AddTeacher extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
+        saveButton=view.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postTeacherManagement();
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
 
 
         return view;
@@ -165,6 +174,18 @@ public class AddTeacher extends Fragment {
                 ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, list);
                 textView.setAdapter(adapter);
                 textView.setThreshold(1);
+                textView.getDropDownHeight();
+                textView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            textView.showDropDown();
+
+                        }
+
+                    }
+                });
                 textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -278,33 +299,7 @@ public class AddTeacher extends Fragment {
 
     }
 
-//    public void postTeacherManagement() {
-//        ArrayList<Integer> teacherId = new ArrayList<>();
-//        int positon=addTeacherResponses.get(pos).id;
-//        Log.i("pos", String.valueOf(positon));
-//        teacherId.add(positon);
-//        ArrayList<Integer> delete = new ArrayList<>();
-//        AddTeacherRequestPost addTeacherRequest = new AddTeacherRequestPost(teacherId, subjectId, standardId, delete);
-//        Call<AddTeacherResponsePost> call = loginService.postTeachermngtCall(addTeacherRequest);
-//        Log.i("teacherId", String.valueOf(teacherId));
-//        Log.i("subjectId", String.valueOf(subjectId));
-//        Log.i("standardId", String.valueOf(standardId));
-//        call.enqueue(new Callback<AddTeacherResponsePost>() {
-//            @Override
-//            public void onResponse(Call<AddTeacherResponsePost> call, Response<AddTeacherResponsePost> response) {
-//                if (!response.isSuccessful()) {
-//                    Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
-//                }
-//                postTeacherManagementResponse = response.body();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<AddTeacherResponsePost> call, Throwable t) {
-//                Toast.makeText(getContext(), "Error :(", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
-//
+
     public void postTeacherManagementDelete(int positon) {
         ArrayList<Integer> teacher = new ArrayList<>();
 
@@ -333,6 +328,7 @@ public class AddTeacher extends Fragment {
 
 
 
+
     private void build() {
         recyclerView = view.findViewById(R.id.add_rvv);
         recyclerView.setHasFixedSize(true);
@@ -349,19 +345,15 @@ public class AddTeacher extends Fragment {
             }
 
             @Override
-            public void onDeleteClick(int position, String teacherName, int id) {
-                name=teacherName;
-                deletedIdIn=id;
-
-                Log.i("name", name);
-                Log.i("id", String.valueOf(deletedIdIn));
-                delete();
+            public void onDeleteClick(int position) {
+                Log.i("name", String.valueOf(position));
+                delete(position);
                 addTeacherSuggets.remove(position);
                 adapters.notifyItemRemoved(position);
             }
 
             @Override
-            public void onNameClick(int position) {
+            public void onNameClick(int i, String teacherName, int position) {
                 textView.setText(addTeacherSuggets.get(position).getTeacherName());
             }
         });
@@ -384,24 +376,11 @@ public class AddTeacher extends Fragment {
 
         }
     };
-    public  void delete(){
-        Log.i("name2", name);
-        for(int p=0;p<=list.size()-1;p++){
-            if (list.get(p).equals(name)) {
-                pos = p;
-                forDelete=p;
-                break;
-            }
-        }
-        Log.i("namees", list.get(pos).toString());
-        Log.i("pos", String.valueOf(deletedId));
-    }
+
 
 
         public void postTeacherManagement() {
-
-             ArrayList<Integer>deleteTwo = new ArrayList<>();
-                AddTeacherRequestPost addTeacherRequest = new AddTeacherRequestPost(addedId, subjectId, standardId, deleteTwo);
+                AddTeacherRequestPost addTeacherRequest = new AddTeacherRequestPost(addedId, subjectId, standardId, deleteteacherId);
                 Call<PostUpdateResponse> call = loginService.postTeachermngtCall(addTeacherRequest);
                 call.enqueue(new Callback<PostUpdateResponse>() {
             @Override
@@ -412,12 +391,16 @@ public class AddTeacher extends Fragment {
                 PostUpdateResponse  post = response.body();
                 Log.i("TAG", "onResponse: ");
             }
-
             @Override
             public void onFailure(Call<PostUpdateResponse> call, Throwable t) {
                 Toast.makeText(getContext(), "Error :(", Toast.LENGTH_LONG).show();
             }
         });
+    }
+    public  void delete(int position){
+        forDelete=position;
+        deleteteacherId.add(addTeacherSuggets.get(forDelete).getId());
+
     }
 
 }

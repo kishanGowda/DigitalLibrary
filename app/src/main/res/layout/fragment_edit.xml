@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.Edit">
 <ScrollView
@@ -46,58 +46,33 @@
             android:textStyle="bold"
             android:text="Subject" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="18dp"
-            android:background="@drawable/stroke_box"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            app:layout_constraintStart_toStartOf="@+id/phone_tv"
-            app:layout_constraintTop_toBottomOf="@id/phone_tv">
 
 
-<!--            <EditText-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="40dp"-->
-<!--                android:background="@color/white"-->
-<!--                android:id="@+id/name"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/close"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"/>-->
+
 
 
             <AutoCompleteTextView
                 android:id="@+id/name"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@drawable/stroke_box"
                 android:textColorHint="#AEAEAE"
+                android:layout_marginTop="14dp"
+                android:padding="8dp"
+                android:hint="Select Subjcet"
+                android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
+                android:layout_marginHorizontal="18dp"
                 android:textStyle="bold"
+                android:inputType="none"
+                android:dropDownHeight="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/close"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/close"
-                android:layout_width="22dp"
-                android:layout_height="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="9dp"
-                android:src="@drawable/ic_close"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
         <TextView
@@ -122,6 +97,7 @@
             android:layout_marginTop="12dp"
             android:textColorHint="#AEAEAE"
             android:textSize="14dp"
+            android:hint="Select class"
             android:textStyle="bold"
             android:layout_marginEnd="18dp"
             android:padding="8dp"
@@ -142,45 +118,30 @@
             android:textStyle="bold"
             android:text="Chapter" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout_chapter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="18dp"
-            android:background="@drawable/stroke_box"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            app:layout_constraintStart_toStartOf="@+id/phone_tv"
-            app:layout_constraintTop_toBottomOf="@id/phone_tv">
+
 
 
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="40dp"
-                android:background="@color/white"
+                android:layout_marginHorizontal="18dp"
+                android:background="@drawable/stroke_box"
                 android:id="@+id/capter_edit"
+                android:padding="8dp"
+                android:layout_marginTop="12dp"
+                android:inputType="none"
+                android:textStyle="bold"
+                android:hint="Select chapter "
+                android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/close_chapter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            <ImageView
-                android:id="@+id/close_chapter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="9dp"
-                android:src="@drawable/ic_close"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <TextView
             android:id="@+id/textView6"
@@ -197,13 +158,15 @@
         <AutoCompleteTextView
             android:id="@+id/topic_drop"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/stroke_box"
             android:orientation="horizontal"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:textColorHint="#AEAEAE"
             android:textSize="14dp"
+            android:inputType="none"
+            android:hint="Select topic"
             android:textStyle="bold"
             android:layout_marginEnd="18dp"
             android:padding="8dp"
@@ -227,8 +190,10 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-
+            android:padding="8dp"
+            android:inputType="none"
+            android:textStyle="bold"
+            android:hint="Enter title"
             android:background="@drawable/stroke_box"
             android:layout_marginStart="18dp"
             android:layout_marginTop="18dp"
@@ -236,13 +201,24 @@
             android:id="@+id/title_edit"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button_save_edit"
             android:layout_width="match_parent"
             android:layout_marginTop="40dp"
+            android:enabled="false"
             android:layout_marginHorizontal="18dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button"
             android:text="Save" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_cancel_edit"
+            android:layout_width="match_parent"
+            android:layout_marginVertical="18dp"
+            android:layout_marginHorizontal="18dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_color_white"
+            android:text="cancel" />
     </LinearLayout>
 </ScrollView>
 </FrameLayout>

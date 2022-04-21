@@ -24,6 +24,7 @@ import com.example.digitallibraryadmin.ModelClass.ParentModel;
 import com.example.digitallibraryadmin.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,6 +39,7 @@ public class MainFragment extends Fragment {
     DashBoardOne homePageGetAllStdResponse;
     RecyclerView recyclerView1;
     Card1HoriAdapter cardHoriAdapter;
+    private static final String TAG = "MainFragment";
 
     RecyclerView.LayoutManager layoutManager1;
     ConstraintLayout cons;
@@ -69,7 +71,7 @@ public class MainFragment extends Fragment {
                     public void onRefresh() {
                         getSubmitAns();
                         standard();
-                        swipeRefreshLayout.setRefreshing(false);
+
                     }
                 }
         );
@@ -78,34 +80,45 @@ public class MainFragment extends Fragment {
 
     }
     public void standard() {
-        Call<DashBoardOne> call = loginService.getHomepageCall();
-        call.enqueue(new Callback<DashBoardOne>() {
-            @Override
-            public void onResponse(Call<DashBoardOne> call, Response<DashBoardOne> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
-                }
-                homePageGetAllStdResponse = response.body();
-                ArrayList<String> standard=new ArrayList();
-                for(int i=0;i<=homePageGetAllStdResponse.standardslength-1;i++) {
-                    standard.add(homePageGetAllStdResponse.data.get(i).std_std);
-                }
-                Set values=new HashSet(standard);
-                Log.i("tag",values.toString());
-                ArrayList<String> uni=new ArrayList<>(values);
-                parentModelArrayList = new ArrayList<>();
-                for (int i = 0; i <= values.size()-1; i++) {
-                    parentModelArrayList.add(new ParentModel(uni.get(i)));
-                }
-                buildRecyclerView2();
+        try {
+            Call<DashBoardOne> call = loginService.getHomepageCall();
+            call.enqueue(new Callback<DashBoardOne>() {
+                @Override
+                public void onResponse(Call<DashBoardOne> call, Response<DashBoardOne> response) {
+                    try {
 
-            }
 
-            @Override
-            public void onFailure(Call<DashBoardOne> call, Throwable t) {
-                Toast.makeText(getContext(), "Error submit :(", Toast.LENGTH_LONG).show();
-            }
-        });
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
+                        }
+                        homePageGetAllStdResponse = response.body();
+                        ArrayList<String> standard = new ArrayList();
+                        for (int i = 0; i <= homePageGetAllStdResponse.standardslength - 1; i++) {
+                            standard.add(homePageGetAllStdResponse.data.get(i).std_std);
+                        }
+                        Set values = new HashSet(standard);
+                        Log.i("tag", values.toString());
+                        ArrayList<String> uni = new ArrayList<>(values);
+                        parentModelArrayList = new ArrayList<>();
+                        Collections.sort(uni);
+                        for (int i = 0; i <= values.size() - 1; i++) {
+                            parentModelArrayList.add(new ParentModel(uni.get(i)));
+                        }
+                        buildRecyclerView2();
+
+                    }catch (Exception e){
+                        Log.i(TAG, "onResponse: "+e.getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<DashBoardOne> call, Throwable t) {
+                    Toast.makeText(getContext(), "Error submit :(", Toast.LENGTH_LONG).show();
+                }
+            });
+        }catch (Exception e){
+            Log.i(TAG, "standard: "+e.getMessage());
+        }
 
     }
     public void buildRecyclerView2(){

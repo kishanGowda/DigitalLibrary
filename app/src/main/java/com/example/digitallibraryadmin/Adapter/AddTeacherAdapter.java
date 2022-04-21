@@ -53,8 +53,8 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
 
     public interface OnItemClickListener {
         void onItemClickListener(int position);
-        void onDeleteClick(int position, String teacherName, int id);
-        void onNameClick(int position);
+        void onDeleteClick(int position);
+        void onNameClick(int i, String teacherName, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -73,18 +73,31 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
             super(itemView);
             name=itemView.findViewById(R.id.suggest_name);
             cancel=itemView.findViewById(R.id.cancel_suggest);
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null) {
+                        int position = getAbsoluteAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onDeleteClick(position);
+
+                        }
+
+                    }
+
+                }
+            });
+
             name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (listener != null) {
                         int position = getAbsoluteAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onNameClick(position);
+                            listener.onNameClick(position,modal.getTeacherName(),modal.getId());
 
                         }
-
                     }
-
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -98,20 +111,6 @@ public class AddTeacherAdapter extends RecyclerView.Adapter<AddTeacherAdapter.Vi
                         }
 
                     }
-                }
-            });
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null) {
-                        int position = getAbsoluteAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position,modal.getTeacherName(),modal.getId());
-
-                        }
-
-                    }
-
                 }
             });
 

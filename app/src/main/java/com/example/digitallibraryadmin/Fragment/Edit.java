@@ -1,13 +1,17 @@
 package com.example.digitallibraryadmin.Fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,14 +25,13 @@ import com.example.digitallibraryadmin.ApiLibrary.GetSubjectBySubIdResponse;
 import com.example.digitallibraryadmin.ApiLibrary.LoginService;
 import com.example.digitallibraryadmin.ApiLibrary.SubjectFilterResponse;
 import com.example.digitallibraryadmin.ApiLibrary.TopicFilterResponse;
-import com.example.digitallibraryadmin.ApiLibrary.TopicResponse;
+import com.example.digitallibraryadmin.ApiLibrary.UpdateLibraryContentRequest;
+import com.example.digitallibraryadmin.ApiLibrary.UpdateLibraryContentResponse;
 import com.example.digitallibraryadmin.ModelClass.ParentModel;
 import com.example.digitallibraryadmin.R;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,13 +51,15 @@ public class Edit extends Fragment {
     int filterdSubjectID;
     int filSubject;
     int topicFilterId;
+    Button save,cancel;
     ArrayList<ParentModel> parentModels;
     DashBoardOne homePageGetAllStdResponse;
-    AutoCompleteTextView text, topicAuto,chapters;
+    AutoCompleteTextView text, topicAuto,chapters,textView;
     ArrayList<String> subjectFiltersList;
     String subjectName, standardName, topicName, chapterName, sectionName, title;
     ArrayList<String> names;
     ArrayList<String> chapterFilter;
+
     ArrayList<String> topicFiltersArray;
     int chapterFilterId;
     ArrayList<String> chapterNames = new ArrayList<>();
@@ -66,12 +71,16 @@ public class Edit extends Fragment {
     int classId;
     int topicCount;
     int filterTopicId;
+    EditText titleText;
     String topicEdited;
+    String file,type;
+    int id;
 
 
 
-    public Edit( String subjectName, String topicName, String chapterName, String sectionName,
-                String titleName, String standardName) {
+    public Edit(String subjectName, String topicName, String chapterName, String sectionName,
+                String titleName, String standardName, int standardId, String file, String type, int id,
+                int subjectId, int chapterId, int topicId) {
 
        this.subjectName=subjectName;
        this.topicName=topicName;
@@ -79,7 +88,13 @@ public class Edit extends Fragment {
        this.sectionName=sectionName;
        title=titleName;
        this.standardName=standardName;
-
+        this.standardId=standardId;
+        this.file=file;
+        this.type=type;
+        this.id=id;
+        filterdSubjectID=subjectId;
+        filterTopicId=chapterId;
+        topicFilterId=topicId;
     }
 
 
@@ -88,43 +103,93 @@ public class Edit extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_edit, container, false);
         name = view.findViewById(R.id.name);
+        textView = (AutoCompleteTextView) view.findViewById(R.id.name);
+        text = (AutoCompleteTextView) view.findViewById(R.id.standard_drop);
+        chapters = view.findViewById(R.id.capter_edit);
+        topicAuto = (AutoCompleteTextView) view.findViewById(R.id.topic_drop);
+        titleText=view.findViewById(R.id.title_edit);
+        save=view.findViewById(R.id.button_save_edit);
 
-        // subjectName=b.getString("position");
-        close = view.findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
+        titleText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                name.setText("");
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(titleText.getText().toString().trim().length()>=1){
+                    save.setEnabled(true);
+                }
+                else {
+                    save.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(titleText.getText().toString().trim().length()>=1){
+                    save.setEnabled(true);
+                }
             }
         });
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               String titleName= titleText.getText().toString();
+                UpdateLibraryContentRequest updateUserKycRequest=new UpdateLibraryContentRequest(filterdSubjectID,filterTopicId,titleName,standardId,topicFilterId,id);
+                Call<UpdateLibraryContentResponse> call=loginService.updateLibraryContentRequestCall(updateUserKycRequest);
+                call.enqueue(new Callback<UpdateLibraryContentResponse>() {
+                    @Override
+                    public void onResponse(Call<UpdateLibraryContentResponse> call, Response<UpdateLibraryContentResponse> response) {
+                        if(!response.isSuccessful())
+                        {
+                            Toast.makeText(getActivity(), response.code(), Toast.LENGTH_SHORT).show();
+                        }
+                        UpdateLibraryContentResponse updateLibraryContentResponse=response.body();
+                        Toast.makeText(getActivity(), updateLibraryContentResponse.show.message, Toast.LENGTH_SHORT).show();
+                        if (updateLibraryContentResponse.show.type.equals("success")){
+                            getActivity().getSupportFragmentManager().popBackStack();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UpdateLibraryContentResponse> call, Throwable t) {
+
+                    }
+                });
+
+
+            }
+        });
         Log.i("s1", standardName);
         Log.i("s2", sectionName);
         Log.i("s2", subjectName);
         Log.i("s2", chapterName);
         Log.i("s2", topicName);
         Log.i("s2", title);
-        Log.i("s22", String.valueOf(standardId));
-        Log.i("s22", String.valueOf(subjectId));
-        Log.i("s22", String.valueOf(chapterId));
-        Log.i("s22", String.valueOf(topicId));
+        Log.i("standard1", String.valueOf(standardId));
+        Log.i("subjectID", String.valueOf(subjectId));
+        Log.i("chapterId", String.valueOf(chapterId));
+        Log.i("topicID", String.valueOf(topicId));
+
+
+        textView.setText(subjectName);
+        text.setText(sectionName+":"+sectionName);
+        topicAuto.setText(topicName);
 
 
 
-
-        //subject name
-        name.setText(subjectName);
         apiInit();
-//        standard();
-
-        //chapter name
         chapters();
-
-        //topic name
-        //topic();
-
-
         subjectName();
+
+
+
+        text = (AutoCompleteTextView) view.findViewById(R.id.standard_drop);
+        text.showDropDown();
+
 
         topic=view.findViewById(R.id.title_edit);
        topicEdited= topic.getText().toString().trim();
@@ -146,6 +211,15 @@ public class Edit extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
+
+        //
+        cancel=view.findViewById(R.id.button_cancel_edit);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
         return view;
     }
 
@@ -161,42 +235,8 @@ public class Edit extends Fragment {
         chapter = view.findViewById(R.id.capter_edit);
         chapter.setText(String.valueOf(chapterName));
 
-        ImageView close = view.findViewById(R.id.close_chapter);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chapter.setText("");
-            }
-        });
     }
 
-//    public void topic() {
-//
-//        Call<List<TopicResponse>> call = loginService.getTopicCall(chapterId, subjectId, standardId);
-//        call.enqueue(new Callback<List<TopicResponse>>() {
-//            @Override
-//            public void onResponse(Call<List<TopicResponse>> call, Response<List<TopicResponse>> response) {
-//                if (!response.isSuccessful()) {
-//                    Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
-//                }
-//                List<TopicResponse> topicFiterTAResponseList = response.body();
-//                int size = topicFiterTAResponseList.size();
-//                Log.i("size", String.valueOf(size));
-//                for (int i = 0; i <= size - 1; i++) {
-//                    chapterNames.add(topicFiterTAResponseList.get(i).topicName);
-//                    Log.i("TAG", String.valueOf(topicFiterTAResponseList.get(i).topicName));
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<TopicResponse>> call, Throwable t) {
-//                Toast.makeText(getContext(), "error", Toast.LENGTH_LONG).show();
-//
-//            }
-//        });
-//    }
 
 
     //filter
@@ -211,6 +251,9 @@ public class Edit extends Fragment {
                 }
                 List<SubjectFilterResponse> subjectFilterResponses = response.body();
                 int size = subjectFilterResponses.size();
+                if(size==0){
+                    save.setEnabled(false);
+                }
                 Log.i("siez", String.valueOf(size));
                 subjectFiltersList = new ArrayList<>();
                 if (size == 0) {
@@ -224,18 +267,23 @@ public class Edit extends Fragment {
                     Log.i("g", subjectFiltersList.get(k).toString().trim());
 
                 }
-                AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.name);
                 ArrayAdapter adapterOne = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, subjectFiltersList);
                 textView.setAdapter(adapterOne);
-                textView.setThreshold(1);
+                textView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        textView.showDropDown();
+                        text.setText("");
+                        chapters.setText("");
+                        topicAuto.setText("");
+                        return false;
+                    }
+                });
+
                 textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String item = adapterView.getItemAtPosition(i).toString();
-
-
-
-//                        Toast.makeText(getContext(), "Item: " + item, Toast.LENGTH_SHORT).show();
                         boolean isRepeated = false;
                         count = 0;
                         for (int j = 0; j <= subjectFiltersList.size() - 1; j++) {
@@ -256,6 +304,8 @@ public class Edit extends Fragment {
 
                     }
                 });
+
+
             }
 
             @Override
@@ -280,34 +330,40 @@ public class Edit extends Fragment {
                 }
                 List<GetSubjectBySubIdResponse> getSubjectBySubIdResponses = response.body();
                 int size = getSubjectBySubIdResponses.size();
+                if(size==0){
+                    save.setEnabled(false);
+                }
                 Log.i("size", String.valueOf(size));
                 names=new ArrayList<>();
+                ArrayList<String>section=new ArrayList<>();
+
                 for(int k=0;k<=size-1;k++){
-                    names.add(getSubjectBySubIdResponses.get(k).std.toString());
+                    names.add(getSubjectBySubIdResponses.get(k).std.toString()+":"+getSubjectBySubIdResponses.get(k).section);
+                    section.add(getSubjectBySubIdResponses.get(k).section);
                     Log.i("names", names.get(k).toString());
                 }
-                text = (AutoCompleteTextView) view.findViewById(R.id.standard_drop);
+
                 ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, names);
                 text.setAdapter(adapter);
+                text.showDropDown();
                 text.setThreshold(1);
+                text.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        text.showDropDown();
+
+                        return false;
+                    }
+                });
                 text.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String item = adapterView.getItemAtPosition(i).toString();
 
-
-
-//
-                        classcount = 0;
-                        for (int j = 0; j <= getSubjectBySubIdResponses.size() - 1; j++) {
-                            if (item == getSubjectBySubIdResponses.get(j).std) {
-                                break;
-                            } else {
-                                classcount++;
-                            }
-                        }
-                        Log.i("classcount", String.valueOf(classcount));
-                        int classId=getSubjectBySubIdResponses.get(classcount).id;
+                        Log.i("TAG", "onItemClick: "+adapterView.getAdapter());
+                        Log.i("TAG", "onItemClick: "+adapterView.getItemIdAtPosition(i));
+                        Log.i("TAG", "onItemClick: "+i);
+                       int classId=getSubjectBySubIdResponses.get(i).id;
                         chapter(classId);
 
                     }
@@ -337,20 +393,32 @@ public class Edit extends Fragment {
                 }
                 List<ChapterfilterResponse> chapterfilterResponses = response.body();
                 int size = chapterfilterResponses.size();
+                if(size==0){
+                 save.setEnabled(false);
+                }
                 Log.i("size", String.valueOf(size));
                 chapterFilter=new ArrayList<>();
                 for(int k=0;k<=size-1;k++){
                     chapterFilter.add(chapterfilterResponses.get(k).name.toString());
                     Log.i("n", chapterFilter.get(k).toString());
                 }
-                chapters = view.findViewById(R.id.capter_edit);
+
                 ArrayAdapter adapterthree = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, chapterFilter);
                 chapters.setAdapter(adapterthree);
+                chapters.showDropDown();
                 chapters.setThreshold(1);
+                chapters.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        chapters.showDropDown();
+                        return false;
+                    }
+                });
                 chapters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String item = adapterView.getItemAtPosition(i).toString();
+
 
                         chaptercount = 0;
                         for (int j = 0; j <= chapterfilterResponses.size() - 1; j++) {
@@ -378,9 +446,6 @@ public class Edit extends Fragment {
 
     private void topic(int filtertopicId) {
        this.filterTopicId=filtertopicId;
-        Log.i("subjectrID", String.valueOf(filterdSubjectID));
-        Log.i("StandardIdr", String.valueOf(classId));
-        Log.i("chapterID", String.valueOf(filterTopicId));
 
         Call<List<TopicFilterResponse>> callSubject = loginService.filterTopicResponseCall(filterdSubjectID,classId,filterTopicId);
         callSubject.enqueue(new Callback<List<TopicFilterResponse>>() {
@@ -391,16 +456,32 @@ public class Edit extends Fragment {
                 }
                 List<TopicFilterResponse> topicFilterResponses = response.body();
                 int size = topicFilterResponses.size();
+                if(size==0){
+                    save.setEnabled(false);
+                    //
+
+
+
+
+                }
                 Log.i("size", String.valueOf(size));
                 topicFiltersArray=new ArrayList<>();
                 for(int k=0;k<=size-1;k++){
                     topicFiltersArray.add(topicFilterResponses.get(k).name.toString());
                     Log.i("sn", topicFiltersArray.get(k).toString());
                 }
-                topicAuto = (AutoCompleteTextView) view.findViewById(R.id.topic_drop);
+
                 ArrayAdapter adapter2 = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, topicFiltersArray);
                 topicAuto.setAdapter(adapter2);
+                topicAuto.showDropDown();
                 topicAuto.setThreshold(1);
+                topicAuto.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        topicAuto.showDropDown();
+                        return false;
+                    }
+                });
                 topicAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -430,12 +511,15 @@ public class Edit extends Fragment {
 
             }
         });
-
-
-
     }
 
     private void getTopic(int topicFilterId) {
         this.topicFilterId=topicFilterId;
+        Log.i("subjectrID", String.valueOf(filterdSubjectID));
+        Log.i("StandardIdr", String.valueOf(classId));
+        Log.i("chapterID", String.valueOf(filterTopicId));
+        Log.i("topicId", String.valueOf(topicFilterId));
+        Log.i("standsardID", String.valueOf(standardId));
+        Log.i("id", String.valueOf(id));
     }
 }

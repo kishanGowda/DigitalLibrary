@@ -50,7 +50,7 @@ import retrofit2.Retrofit;
 public class SubjectFragment extends Fragment {
     View view;
     int i;
-    String section,standard;
+    String section, standard;
 
     RecyclerView recyclerView2;
     // for recycler
@@ -61,7 +61,6 @@ public class SubjectFragment extends Fragment {
     Retrofit retrofit;
     int position;
     LinearLayout linearLayout;
-
 
 
     private RecyclerView.LayoutManager layoutManager;
@@ -81,29 +80,29 @@ public class SubjectFragment extends Fragment {
         TransitionInflater inflate = TransitionInflater.from(requireContext());
         setExitTransition(inflate.inflateTransition(R.transition.fade));
         view = inflater.inflate(R.layout.fragment_subject, container, false);
-        section=getArguments().getString("section");
-        standard=getArguments().getString("standardName");
+        section = getArguments().getString("section");
+        standard = getArguments().getString("standardName");
         Log.i("section", section);
-        Log.i("standard",String.valueOf( standard));
-        TextView tv1 =view.findViewById(R.id.standard_tool_bar1);
+        Log.i("standard", String.valueOf(standard));
+        TextView tv1 = view.findViewById(R.id.standard_tool_bar1);
         tv1.setText(standard);
-        TextView tv2 =view.findViewById(R.id.section_toolbar1);
+        TextView tv2 = view.findViewById(R.id.section_toolbar1);
         tv2.setText(section);
         apiInit();
         standardById();
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayoutSubjet);
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayoutSubjet);
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                       standardById();
+                        standardById();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }
         );
 
 
-        back=view.findViewById(R.id.back_subject);
+        back = view.findViewById(R.id.back_subject);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +128,7 @@ public class SubjectFragment extends Fragment {
 
     public void standardById() {
         position = Integer.valueOf(getArguments().getString("Position"));
-         Log.i("Position", String.valueOf(position));
+        Log.i("Position", String.valueOf(position));
         Call<StandardByID> standardByIdResponseCall = loginService.standardCall(position);
         standardByIdResponseCall.enqueue(new Callback<StandardByID>() {
             @Override
@@ -143,12 +142,12 @@ public class SubjectFragment extends Fragment {
                 i = standard.subjects.size();
                 Log.i("i", String.valueOf(i));
                 if (i == 0) {
-                    linearLayout=view.findViewById(R.id.no_subject_avialbale_);
+                    linearLayout = view.findViewById(R.id.no_subject_avialbale_);
                     linearLayout.setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), "0", Toast.LENGTH_LONG).show();
                 } else {
                     for (int j = 0; j <= i - 1; j++) {
-                        subjectModels.add(new SubjectModel(standard.subjects.get(j).subjects_name, String.valueOf(standard.subjects.get(j).chapterCount), Integer.valueOf(standard.subjects.get(j).notesCount), Integer.valueOf(standard.subjects.get(j).videoCount), Integer.valueOf(standard.subjects.get(j).quesBankCount),standard.subjects.get(j).subjects_id,standard.data.get(0).getStd_id()));
+                        subjectModels.add(new SubjectModel(standard.subjects.get(j).subjects_name, String.valueOf(standard.subjects.get(j).chapterCount), Integer.valueOf(standard.subjects.get(j).notesCount), Integer.valueOf(standard.subjects.get(j).videoCount), Integer.valueOf(standard.subjects.get(j).quesBankCount), standard.subjects.get(j).subjects_id, standard.data.get(0).getStd_id()));
                     }
                     build();
                 }
@@ -166,17 +165,18 @@ public class SubjectFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        subjectAdapter = new SubjectAdapter(subjectModels, getContext(),position,section,standard);
+        subjectAdapter = new SubjectAdapter(subjectModels, getContext(), position, section, standard);
         recyclerView.setAdapter(subjectAdapter);
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
 
-         // It's important here
+        // It's important here
     }
-//
+
 //    @Override
 //    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 //        inflater.inflate(R.menu.menu, menu);
@@ -199,31 +199,66 @@ public class SubjectFragment extends Fragment {
 //            }
 //        });
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(R.menu.menu, menu);
-        // Associate searchable configuration with the SearchView
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        getActivity().getMenuInflater().inflate(R.menu.menu, menu);
+//        // Associate searchable configuration with the SearchView
+//        SearchManager searchManager = (SearchManager) getActivity().getSystemService(getContext().SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+//        Log.d("Tab", "SearchManager: " + searchManager + " : " + searchView);
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                searchView.clearFocus();
+//                return false;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                subjectAdapter.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
+//    }
 
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(getContext().SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        Log.d("Tab", "SearchManager: " + searchManager + " : " + searchView);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchView.clearFocus();
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                subjectAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            super.onCreateOptionsMenu(menu, inflater);
+            menu.clear();
+            inflater.inflate(R.menu.menu, menu);
+            MenuItem item = menu.findItem(R.id.action_search);
+            SearchView searchView = new SearchView(((MainActivity) getActivity()).getSupportActionBar().getThemedContext());
+            // MenuItemCompat.setShowAsAction(item, //MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | //MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+            //  MenuItemCompat.setActionView(item, searchView);
+            // These lines are deprecated in API 26 use instead
+
+            MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+            MenuItemCompat.setActionView(item, searchView);
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+            item.setActionView(searchView);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
+            searchView.setOnClickListener(new View.OnClickListener() {
+                                              @Override
+                                              public void onClick(View v) {
+
+                                              }
+                                          }
+            );
+        }
+
+
     }
 
-    }
 
 
 
